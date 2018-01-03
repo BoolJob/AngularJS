@@ -1,0 +1,88 @@
+
+<div id="window" class="k-widget">
+
+	<!-- Asistente búsqueda -->
+	<div class="bcs-filters hidden"> <!-- <<<< Agregar clase hidden -->
+		<div class="filters-box flex-container animate fade">
+			<div class="header flex-item">
+				<h2>Asistente de b&uacute;squeda</h2>
+				<a ng-click="ocultaPanel()" class="close hide"></a>
+            </div>
+            <div class="container flex-item">           
+
+              <!-- TABS -->
+				<div>
+					<div>
+						<!-- CONTENIDOS TAB 1 -->
+						<div>
+							<table class="info-table fw" border="0" cellspacing="0"> 
+								<tr>									
+									<td>
+										<label>Indice nombre BCS</label>
+										<input type="text" ng-model="indice.indice"  ng-disabled="bloqueActivo != 0 ? 'true' : ''">										
+									</td>
+									<td>
+										<label>Indice nombre S&P</label>
+										<input type="text" ng-model="indice.indice_sandp"  ng-disabled="bloqueActivo == 2 ? 'true' : ''">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>Estado</label>
+										<select ng-model="indice.estado" ng-options="s.value as s.text for s in estados" ng-disabled="bloqueActivo == 2 ? 'true' : ''">
+										{{ descripcionEstado(indice.estado) }} </select>										
+									</td>
+									<td>
+										<label>Mercado</label>
+										<select ng-model="indice.mercado" ng-options="s.value as s.text for s in mercados" ng-disabled="bloqueActivo == 2 ? 'true' : ''">
+										{{ descripcionMercado(indice.mercado) }}</select>										
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>Dividendo</label>
+										<select ng-model="indice.dividendo" ng-options="s.value as s.text for s in dividendo" ng-disabled="bloqueActivo != 0 ? 'true' : ''">
+										{{ descripcionDividendo(indice.dividendo) }}</select>										
+									</td>
+									<td>
+										<label>Mila</label>
+										<select ng-model="indice.mila" ng-options="s.value as s.text for s in mila" ng-disabled="bloqueActivo == 2 ? 'true' : ''">
+										{{ descripcionMila(indice.mila) }}</select>										
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div> 
+				</div>
+              
+            </div>
+            <div class="footer-buttons flex-item">
+              <button class="w90 hide" ng-click="guardarAccion()">Aceptar</button>
+              <button class="w90 hide" ng-click="ocultaPanel()">Cancelar</button>              
+            </div>
+		</div>
+		<div class="overlay fw fh"></div>
+	</div>
+
+	<!-- HEADER -->
+	<div class="bcs-header">
+	<!-- TOOLBAR -->
+		<div class="bcs-toolbar">
+			<ul class="ul-vertical">
+				<li><button class="show" ng-click="despliegaPanel(0)">Agregar</button></li>
+				<li><button class="show" ng-click="despliegaPanel(1)">Editar</button></li>
+				<li><button class="show" ng-click="despliegaPanel(2)">Eliminar</button></li>
+			</ul>
+		</div>
+	</div>
+	
+	<div id="confirm"></div>
+	
+	<kendo-grid id="IndicesGrid" options="mainGridOptions"></kendo-grid>
+	
+	<!-- FOOTER -->
+	<div class="bcs-footer">
+		Footer
+	</div>
+	
+</div>

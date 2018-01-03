@@ -1,0 +1,333 @@
+[
+    {
+        "BrokerageName": "BOLSA",
+        "SecurityName": "AESGENER",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "1000",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "PH (t+0)",
+        "SecurityBasePrice": "120.80",
+        "TradeDate": "20170608"
+    },{
+        "BrokerageName": "VALORES SECURITY S.A.CORREDORES DE BOLSA",
+        "SecurityName": "AESGENER",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "1000",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "1000",
+        "SettlementCondition": "PH (t+0)",
+        "SecurityBasePrice": "",
+        "TradeDate": "20170608"
+    },{
+        "BrokerageName": "VALORES SECURITY S.A.CORREDORES DE BOLSA",
+        "SecurityName": "AESGENER",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "1991",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "1991",
+        "SettlementCondition": "PH (t+0)",
+        "SecurityBasePrice": "",
+        "TradeDate": "20170607"
+    },{
+        "BrokerageName": "VALORES SECURITY S.A.CORREDORES DE BOLSA",
+        "SecurityName": "AESGENER",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "1990",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "1990",
+        "SettlementCondition": "PH (t+0)",
+        "SecurityBasePrice": "",
+        "TradeDate": "20170606"
+    },{
+        "BrokerageName": "VALORES SECURITY S.A.CORREDORES DE BOLSA",
+        "SecurityName": "AESGENER",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "4500",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "4500",
+        "SettlementCondition": "PH (t+0)",
+        "SecurityBasePrice": "199",
+        "TradeDate": "20170605"
+    },{
+        "BrokerageName": "VALORES SECURITY S.A.CORREDORES DE BOLSA",
+        "SecurityName": "AESGENER",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "3000",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "3000",
+        "SettlementCondition": "PH (t+0)",
+        "SecurityBasePrice": "175",
+        "TradeDate": "20170604"
+    },{
+        "BrokerageName": "VALORES SECURITY S.A.CORREDORES DE BOLSA",
+        "SecurityName": "AESGENER",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "3500",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "3500",
+        "SettlementCondition": "PH (t+0)",
+        "SecurityBasePrice": "180",
+        "TradeDate": "20170603"
+    },{
+        "BrokerageName": "VALORES SECURITY S.A.CORREDORES DE BOLSA",
+        "SecurityName": "AESGENER",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "3000",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "3000",
+        "SettlementCondition": "PH (t+0)",
+        "SecurityBasePrice": "190",
+        "TradeDate": "20170602"
+    },{
+        "BrokerageName": "VALORES SECURITY S.A.CORREDORES DE BOLSA",
+        "SecurityName": "AESGENER1233445",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "2000",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "2000",
+        "SettlementCondition": "PH (t+0)",
+        "SecurityBasePrice": "191",
+        "TradeDate": "20170609"
+    },{
+        "BrokerageName": "VALORES SECURITY S.A.CORREDORES DE BOLSA",
+        "SecurityName": "AGUAS-A",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "PH (t+0)",
+        "SecurityBasePrice": "",
+        "TradeDate": "20170609"
+    },{
+        "BrokerageName": "ETCHEGARAY S.A. CORREDORES DE BOLSA",
+        "SecurityName": "",
+        "SecurityType": "Fixed Income (IRF)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "PM (t+1)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "JAIME LARRAIN Y CIA. C. DE BOLSA LTDA.",
+        "SecurityName": "",
+        "SecurityType": "Fixed Income (IRF)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "CN (t+2)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "LARRAIN VIAL S.A. CORREDORA DE BOLSA",
+        "SecurityName": "",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "CN (t+2)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "CORREDORES DE BOLSA SURA S.A.",
+        "SecurityName": "",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "CN (t+2)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "ITAU CORPBANCA CORREDORES DE BOLSA S.A.",
+        "SecurityName": "",
+        "SecurityType": "Fixed Income (IRF)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "CN (t+2)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "J.P. MORGAN CORREDORES DE BOLSA SPA",
+        "SecurityName": "",
+        "SecurityType": "Fixed Income (IRF)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "CN (t+2)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "GBM CORREDORES DE BOLSA LIMITADA",
+        "SecurityName": "",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "CN (t+2)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "SCOTIA CORREDORA DE BOLSA CHILE S.A.",
+        "SecurityName": "",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "CN (t+2)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "NEGOCIOS Y VALORES S.A. C. DE BOLSA",
+        "SecurityName": "",
+        "SecurityType": "Fixed Income (IRF)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "PM (t+1)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "BANCOESTADO S.A. CORREDORES DE BOLSA",
+        "SecurityName": "",
+        "SecurityType": "Fixed Income (IRF)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "PH (t+0)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "BCI CORREDOR DE BOLSA S.A.",
+        "SecurityName": "",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "PH (t+0)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "TANNER CORREDORES DE BOLSA S.A.",
+        "SecurityName": "",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "PH (t+0)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "MERRILL LYNCH CORREDORES DE BOLSA SPA",
+        "SecurityName": "",
+        "SecurityType": "Fixed Income (IRF)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "PM (t+1)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "MBI CORREDORES DE BOLSA S.A.",
+        "SecurityName": "",
+        "SecurityType": "Fixed Income (IRF)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "CN (t+2)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "CREDICORP CAPITAL S.A. CORRED. DE BOLSA",
+        "SecurityName": "",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "CN (t+2)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "FINANZAS Y NEGOCIOS S.A.  C. DE BOLSA",
+        "SecurityName": "",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "CN (t+2)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "BTG PACTUAL CHILE SA CORREDORES DE BOLSA",
+        "SecurityName": "",
+        "SecurityType": "Fixed Income (IRF)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "PM (t+1)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "EUROAMERICA CORREDORES DE BOLSA S.A.",
+        "SecurityName": "",
+        "SecurityType": "Fixed Income (IRF)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "PM (t+1)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "BICE INVERSIONES CORREDORES DE BOLSA S.A",
+        "SecurityName": "",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "PH (t+0)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "BBVA CORREDORES DE BOLSA LTDA.",
+        "SecurityName": "",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "PM (t+1)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "BANCHILE CORREDORES DE BOLSA S.A.",
+        "SecurityName": "",
+        "SecurityType": "Fixed Income (IRF)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "CN (t+2)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "SANTANDER S.A. CORREDORES DE BOLSA",
+        "SecurityName": "",
+        "SecurityType": "Fixed Income (IRF)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "PM (t+1)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    },{
+        "BrokerageName": "CONSORCIO CORREDORES DE BOLSA S.A.",
+        "SecurityName": "",
+        "SecurityType": "Equities (RV)",
+        "QuantityOfSecurity": "",
+        "AssignedQuantity": "",
+        "QuantityToBeAssigned": "",
+        "SettlementCondition": "PH (t+0)",
+        "SecurityBasePrice": "",
+        "TradeDate": ""
+    }
+]

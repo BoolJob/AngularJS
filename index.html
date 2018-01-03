@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="es-CL">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width">
+
+    <!-- CCS de la APP -->
+    <link rel="stylesheet" type="text/css" href="css/common-material.css">
+    <link rel="stylesheet" type="text/css" href="css/materialblack.css">
+    <link rel="stylesheet" type="text/css" href="css/base-dark.css">
+    <link rel="stylesheet" type="text/css" href="css/rf.css">
+    <link rel="stylesheet" type="text/css" href="css/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <!-- Script jquery -->
+    <script type="text/javascript" src="assets/lib/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="assets/lib/jquery/dist/jquery.min.js"></script>
+    
+    
+
+    <!-- Notifyjs -->
+    <script type="text/javascript" src="assets/lib/notifyjs/dist/notify.js"></script>
+
+    <!-- AngularJS -->
+    <script type="text/javascript" src="assets/lib/angular/angular.js"></script>
+	<script type="text/javascript" src="assets/lib/angular-resource/angular-resource.js"></script>
+    <script type="text/javascript" src="assets/lib/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/lib/angular-locale-bundles/dist/angular-locale-bundles.js"></script>
+    <script type="text/javascript" src="assets/lib/angular-route/angular-route.js"></script>
+    <script type="text/javascript" src="assets/lib/angular-sanitize/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="assets/lib/ngModal/ng-modal.min.js"></script>
+
+    <!--  Kendo Libs -->
+    <script type="text/javascript" src="assets/lib/kendo-ui/js/kendo.all.min.js"></script>
+    <script type="text/javascript" src="assets/lib/kendo-ui/js/messages/kendo.messages.es-CL.min.js"></script>
+    <script type="text/javascript" src="assets/lib/kendo-ui/js/cultures/kendo.culture.es-CL.min.js"></script>
+
+    <!-- Script Bolsa -->
+	<script type="text/javascript" src="app/lb-services.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
+
+    <script type="text/javascript" src="shared/mainCTRL.js"></script>
+    <script type="text/javascript" src="shared/rootCTRL.js"></script>
+
+	<!-- Solution Scripts -->
+    <script type="text/javascript" src="app/registro/registro.js"></script>
+</head>
+
+<body ng-app="app" ng-controller="rootCTRL" ng-cloak>
+
+    <div>
+		<div class="tab-content minHeight" id="registro" ng-view></div>
+	</div>
+  
+</body>
+</html>

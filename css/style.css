@@ -1,0 +1,244 @@
+/************************************************** 
+GRILLA ********************************************
+**************************************************/
+.grid-container {
+	border-width: 0;
+	border-top: 1px solid #191919;
+	background: #363636;
+}
+
+div.k-grid-header,
+.k-grid-header th.k-header {
+	background-color: #2B2B2B;
+	border-color: #4D4D4D;
+}
+.k-grid-header th.k-header {
+	border-bottom: 1px solid #2A80B9;
+}
+
+.k-grid-header-wrap {
+	border-color: #4D4D4D;
+    border-bottom: 1px solid #2A80B9;
+}
+
+/* Header de la grilla */
+.k-grid-header th.k-header {
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+/* Color de los textos en el header de la grilla*/
+.k-grid-header .k-header .k-link, 
+.k-grid-header .k-link, 
+.k-grid-header .k-link:link {
+	color: #FFFFFF;
+}
+
+/* La grilla venía envuelta por un borde oscuro */
+.k-grid {
+	border: 0;
+}
+
+.k-grid tr {
+	background: #3D3D3D;
+}
+
+/*.k-grid tr:hover {
+	background-color: #265472;
+}*/
+
+.k-grid tr.k-state-selected, .k-grid tr.k-state-selected:hover {
+	background-color: #2A80B9;
+}
+
+.k-grid tr.k-state-selected {
+    background-color: #2980B9;
+}
+
+/* Altura de celdas */
+.k-grid td {
+	padding: 2px 1.286em;
+	color: #FFFFFF;
+	font-size: 12px;
+	line-height: normal;
+}
+
+/* Paginador */
+.k-pager-wrap {
+	padding: 0;
+}
+
+.k-pager-wrap a.k-link {
+	background-color: transparent;
+	border: none;
+}
+.k-pager-wrap a:hover.k-link {
+	cursor: pointer;
+}
+
+.k-pager-wrap .k-pager-numbers .k-state-selected {
+    margin-top: 0;
+    padding-top: 0;
+    background-color: transparent;
+    color: #00B0FF;
+    border: none;
+    border-bottom: 2px solid;
+    /*line-height: 20px;*/
+}
+
+:root *>.k-icon {
+	/*margin-top: 3px;*/
+}
+
+.k-pager-wrap .k-pager-nav.k-pager-last {
+	border: none;
+}
+
+
+/************************************************** 
+GRILLA 2 ******************************************
+**************************************************/
+.k-grid-header {
+	border-bottom: 1px solid red;
+}
+
+.k-grid-header:first-child, 
+.k-grid-toolbar:first-child, 
+.k-grid>.k-grouping-header, 
+.k-scheduler>.k-scheduler-toolbar:first-child {
+	border-radius: 0;
+}
+
+.k-filter-row th, 
+.k-grid-header th.k-header {
+	font-size: 12px;
+}
+.k-grid-header th.k-header>.k-link {
+	font-weight: normal;
+}
+
+.k-grid-pager {
+	background: #5A5A5A;
+	border: none;
+	border-radius: 0;
+}
+
+.k-grid tr td {
+    border-width: 0 0 1px 0px;
+    border-color: #4D4D4D;
+}
+
+/*!
+ * Copyright (c) 2016
+ */
+
+/* AUXILIARES */
+.invisible {
+	display: none;
+}
+
+.required {
+	color: red;
+	margin-left: 2px;
+	font-weight: normal;
+}
+
+.fr {
+	float: right;
+}
+
+.fl {
+	float: left;
+}
+
+.text-center {
+	text-align: center;
+}
+.text-italic {
+    font-style: italic;
+}
+
+.mt-25 {
+	margin-top: 25px;
+}
+.mt-10 {
+	margin-top: 10px;
+}
+
+.noMargin {
+	margin: 0;
+}
+
+.noPadding {
+	padding: 0;
+}
+
+.minHeight {
+	min-height: 550px;
+}
+
+.noList {
+	list-style: none;
+}
+
+.ulHorizontal li {
+	float: left;
+	padding-left: 5px;
+}
+
+.box-msge {
+	font-size: 12px;
+}
+
+.box-msge a {
+	margin-top: 5px;
+	display: block;
+}
+
+.box-confirm {
+	width: 100%;
+	background: #009D86;
+	color: #FFF;
+	display: block;
+	padding: 5px;
+	border-radius: 2px;
+	text-align: center;
+}
+
+.box-error {
+	width: 100%;
+	background: #CD3F37;
+	color: #FFF;
+	display: block;
+	padding: 5px;
+	border-radius: 2px;
+	text-align: center;
+}
+.error {
+	color: #DF1E13;
+	
+}
+input.invalid, div.invalid div.angucomplete-holder input {
+	border: 1px solid red;
+}
+
+.box-alert {
+	width: 100%;
+	background: #FCCC29;
+	color: #333;
+	display: block;
+	padding: 5px;
+	border-radius: 2px;
+	text-align: center;
+}
+
+.btn-footer {
+	text-align: right;
+	margin-top: 10px;
+	display: inline-block;
+	width: 100%;
+	/*padding-right: 15px;*/
+}
+.btn-full-width {
+	width: 100%;
+}

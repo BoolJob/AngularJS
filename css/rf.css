@@ -1,0 +1,186 @@
+/************************************************** 
+AUXILIARES ****************************************
+**************************************************/
+.subtitle {color: #2980B9;}
+
+
+/************************************************** 
+WINDOW ********************************************
+**************************************************/
+.k-window-titlebar .k-state-hover {background-color: #1A5983;border-color: #1A5983}
+
+
+/************************************************** 
+TOOLBAR *******************************************
+**************************************************/
+.bcs-toolbar {background-color: #2980B9;}
+.k-toolbar .k-toggle-button.k-state-active:hover {background-color: #1A5983;border-color: #1A5983}
+
+
+/************************************************** 
+GRILLA ********************************************
+**************************************************/
+.k-grid-header th.k-header {border-bottom: 1px solid #2980B9;}
+.k-grid-header-wrap {border-bottom: 1px solid #2980B9;}
+.k-grid tr:hover {background-color: rgba(41,128,185,0.6);}
+.k-grid tr.k-state-selected {background-color: #2980B9;}
+.k-grid td.k-state-selected,
+.k-grid tr.k-state-selected>td {border-color: #2980b9;}
+.k-pager-wrap .k-pager-numbers .k-state-selected {color: #009aff;}
+
+
+/************************************************** 
+FILTROS *******************************************
+**************************************************/
+.filters-box {background: #2980B9;}
+.filters-box button {background-color: #1A5983}
+.filters-box button:hover,
+.filters-box button:focus {background-color: #13405E;}
+
+/*Filtros grilla*/
+.k-edit-form-container .k-primary, 
+.k-popup .k-primary {color:#009aff;}
+
+
+/************************************************** 
+FORMULARIO ****************************************
+**************************************************/
+.k-window-content,
+.k-window-titlebar {background-color: #2980B9;}
+.colorBox {background-color: #2980B9;}
+.colorBox button {background: #075B92;}
+.colorBox button:hover,
+.colorBox .btn-default.focus, 
+.colorBox .btn-default:focus {background: #10466B;}
+.colorBox button:disabled,
+.colorBox button:hover:disabled {background: #075B92;}
+
+
+/************************************************** 
+TABS **********************************************
+**************************************************/
+/* Style the tab */
+div.tab {background-color: #2980B9;}
+
+/* Style the buttons inside the tab */
+div.tab button {background-color: #2980B9;}
+
+/*TOP*/
+.k-tabstrip-top,
+.k-tabstrip-top>.k-tabstrip-items,
+.k-tabstrip-top>.k-tabstrip-items .k-item {background-color:#2980B9}
+
+.k-tabstrip-top>.k-button-bare.k-tabstrip-next,
+.k-tabstrip-top>.k-button-bare.k-tabstrip-prev {background-color: #2980B9 !important;}
+
+.k-panelbar .k-tabstrip-items .k-state-active, 
+.k-tabstrip-items .k-state-active {background-color: #2980B9;}
+
+/*Background de la transición entre tabs*/
+.k-autocomplete, 
+.k-button, 
+.k-draghandle, 
+.k-dropdown-wrap, 
+.k-grid-header, 
+.k-grouping-header, 
+.k-header, 
+.k-numeric-wrap, 
+.k-panelbar .k-tabstrip-items .k-item, 
+.k-picker-wrap, 
+.k-progressbar, 
+.k-state-highlight, 
+.k-tabstrip-items .k-item, 
+.k-textbox, 
+.k-toolbar, 
+.km-pane-wrapper>.km-pane>.km-view>.km-content {background-color: #2F2F2F;}
+
+/*Background de la transición entre tabs de los FILTROS*/
+.filters-box .k-autocomplete, 
+.filters-box .k-button, 
+.filters-box .k-draghandle, 
+.filters-box .k-dropdown-wrap, 
+.filters-box .k-grid-header, 
+.filters-box .k-grouping-header, 
+.filters-box .k-header, 
+.filters-box .k-numeric-wrap, 
+.filters-box .k-panelbar .k-tabstrip-items .k-item, 
+.filters-box .k-picker-wrap, 
+.filters-box .k-progressbar, 
+.filters-box .k-state-highlight, 
+.filters-box .k-tabstrip-items .k-item, 
+.filters-box .k-textbox, 
+.filters-box .k-toolbar, 
+.filters-box .km-pane-wrapper>.km-pane>.km-view>.km-content {background-color: #2980B9;}
+
+
+/************************************************** 
+CHECKBOXES ****************************************
+**************************************************/
+/* checked mark aspect */
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {color: #2980B9;}
+
+/* accessibility */
+[type="checkbox"]:checked:focus + label:before,
+[type="checkbox"]:not(:checked):focus + label:before {box-shadow: 0 0px 5px #2980B9;}
+
+
+/************************************************** 
+COMBOBOXES ****************************************
+**************************************************/
+.k-list>.k-state-selected.k-state-focused {color: #00b0ff}
+
+
+/************************************************** 
+DATEPICKER ****************************************
+**************************************************/
+.k-calendar .k-header,
+.k-calendar .k-header.k-state-hover,
+.k-calendar .k-today,
+.k-calendar .k-today.k-state-hover {background-color: #2980B9;}
+.k-calendar .k-footer .k-nav-today {color: #009aff;}
+.k-calendar .k-header .k-state-hover {background-color: #1A5983}
+.k-calendar .k-today.k-state-hover {background-color: #1A5983}
+.k-calendar .k-today:active {-webkit-box-shadow: inset 0 0 0 1px #1A5983;box-shadow: inset 0 0 0 1px #1A5983}
+
+
+/************************************************** 
+GANTT *********************************************
+**************************************************/
+.k-gantt .k-gantt-toolbar .k-button:hover,
+.k-gantt .k-gantt-toolbar .k-gantt-views li.k-state-hover,
+.k-gantt .k-gantt-toolbar .k-gantt-views li.k-state-hover .k-link,
+
+.k-grid .k-header .k-button:hover,
+.k-scheduler .k-header .k-button:hover,
+.k-scheduler .k-scheduler-toolbar .k-scheduler-views li.k-state-hover,
+.k-scheduler .k-scheduler-toolbar .k-scheduler-views li.k-state-hover .k-link,
+.km-pane-wrapper .k-header .k-button:hover {background-color: #1A5983;border-color: #1A5983}
+
+.k-grouping-header .k-group-indicator,
+.k-pivot-toolbar .k-button {background-color: #1A5983;border-color: #1A5983;}
+
+/************************************************** 
+PANEL BAR *****************************************
+**************************************************/
+.k-panelbar>li.k-state-default>.k-link.k-state-selected, 
+.k-panelbar>li>.k-state-selected, .k-state-selected>.k-link {background-color: #009aff;border-radius: 50%; border: 1px solid white;}
+
+
+/************************************************** 
+COLOR TEXTO ***************************************
+**************************************************/
+.k-draghandle.k-state-selected:hover, 
+.k-ghost-splitbar-horizontal, 
+.k-ghost-splitbar-vertical, 
+.k-list>.k-state-highlight, 
+.k-list>.k-state-selected, 
+.k-marquee-color, 
+.k-panel>.k-state-selected, 
+.k-scheduler .k-scheduler-toolbar .k-state-selected, 
+.k-scheduler .k-today.k-state-selected, 
+.k-state-selected, 
+.k-state-selected:link, 
+.k-state-selected:visited {
+	color: #009aff;
+}

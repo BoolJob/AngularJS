@@ -1,0 +1,17 @@
+<!--<div class="bcs-toolbar">
+    <ul class="ul-vertical">
+        <li><button class="show" ng-click="show()">Create</button></li>
+        <li><button class="show" ng-click="modify()">Modify</button></li>
+        <li><button id="msa-details">Details</button></li>
+        <li><button id="msa-reject">Reject</button></li>
+    </ul>
+</div>-->
+
+<div class="bcs-toolbar">
+    <ul class="ul-vertical">
+        <li ng-repeat="button in buttons">
+            <button class="{{ button.btnClass }}" id="{{ button.btnID }}" ng-click="{{ button.ngClick }}" ng-disabled="{{ button.ngDisable }}">{{ button.btnName }}</button>
+        </li>
+    </ul>
+</div>
+

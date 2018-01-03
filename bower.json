@@ -1,0 +1,27 @@
+{
+  "name": "app",
+  "authors": [
+    "Marco Alarcon <malarcon@bolsadesantiago.com>",
+    "Michael J Vadney <Michael.J.Vadney@ibm.com>"
+  ],
+  "description": "LendingBlockchain",
+  "main": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "assets/lib"
+  ],
+  "dependencies": {
+    "kendo-ui": "https://bower.telerik.com/bower-kendo-ui.git",
+    "angular": "^1.6.4",
+    "angular-route": "^1.6.4",
+    "angular-i18n": "^1.6.4",
+    "underscore": "^1.8.3",
+    "notifyjs": "^0.4.2",
+    "angular-resource": "^1.6.4"
+  }
+}

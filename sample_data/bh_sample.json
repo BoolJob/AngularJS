@@ -1,0 +1,253 @@
+[
+	{
+		"BrokerId": "11",
+		"BrokerName": "BOLSA",
+		"ShortName": "BCS",
+		"FullName": "BOLSA",
+		"AltBrokerID": "11",
+		"RUT": "90249000-0",
+		"Address": "BANDERA 63",
+		"PhoneNumber": "56226982001"
+	},
+	{
+		"BrokerId": "20",
+		"BrokerName": "SECURITY",
+		"ShortName": "SECC",
+		"FullName": "VALORES SECURITY S.A.CORREDORES DE BOLSA",
+		"AltBrokerID": "111",
+		"RUT": "96515580-5",
+		"Address": "APOQUINDO 3150 PISO 7",
+		"PhoneNumber": "56225844700"
+	},
+	{
+		"BrokerId": "24",
+		"BrokerName": "ETCHEGARAY",
+		"ShortName": "ETCH",
+		"FullName": "ETCHEGARAY S.A. CORREDORES DE BOLSA",
+		"AltBrokerID": "129",
+		"RUT": "96535530-8",
+		"Address": "LA BOLSA 64 OF. 123",
+		"PhoneNumber": "56226967385"
+	},
+	{
+		"BrokerId": "34",
+		"BrokerName": "LARRAGAR",
+		"ShortName": "LGAR",
+		"FullName": "JAIME LARRAIN Y CIA. C. DE BOLSA LTDA.",
+		"AltBrokerID": "23",
+		"RUT": "84360700-4",
+		"Address": "NUEVA YORK 48 ",
+		"PhoneNumber": "56226962563"
+	},
+	{
+		"BrokerId": "35",
+		"BrokerName": "LARRA",
+		"ShortName": "LARR",
+		"FullName": "LARRAIN VIAL S.A. CORREDORA DE BOLSA",
+		"AltBrokerID": "6",
+		"RUT": "80537000-9",
+		"Address": "AVDA. EL BOSQUE NORTE 0177",
+		"PhoneNumber": "56223398500"
+	},
+	{
+		"BrokerId": "42",
+		"BrokerName": "SURA",
+		"ShortName": "42",
+		"FullName": "CORREDORES DE BOLSA SURA S.A.",
+		"AltBrokerID": "193",
+		"RUT": "76011193-7",
+		"Address": "AV. APOQUINDO 4820 OF. 1601",
+		"PhoneNumber": "56229152010"
+	},
+	{
+		"BrokerId": "43",
+		"BrokerName": "ITAU",
+		"ShortName": "43",
+		"FullName": "ITAU CORPBANCA CORREDORES DE BOLSA S.A.",
+		"AltBrokerID": "85",
+		"RUT": "96665450-3",
+		"Address": "ROSARIO NORTE 650 PISO 17 LAS CONDES",
+		"PhoneNumber": "56226603600"
+	},
+	{
+		"BrokerId": "46",
+		"BrokerName": "JP MORGAN",
+		"ShortName": "JPCB",
+		"FullName": "J.P. MORGAN CORREDORES DE BOLSA SPA",
+		"AltBrokerID": "203",
+		"RUT": "76109764-4",
+		"Address": "AV.APOQUINDO 2827 PISO 13 LAS CONDES",
+		"PhoneNumber": "56224255108"
+	},
+	{
+		"BrokerId": "47",
+		"BrokerName": "GBM",
+		"ShortName": "GBM",
+		"FullName": "GBM CORREDORES DE BOLSA LIMITADA",
+		"AltBrokerID": "204",
+		"RUT": "76121415-2",
+		"Address": "MAGDALENA 181 OF 1201 LAS CONDES",
+		"PhoneNumber": "56226169800"
+	},
+	{
+		"BrokerId": "48",
+		"BrokerName": "SCOTIA",
+		"ShortName": "SCO",
+		"FullName": "SCOTIA CORREDORA DE BOLSA CHILE S.A.",
+		"AltBrokerID": "140",
+		"RUT": " 96568550-2",
+		"Address": "AGUSTINAS 1225 PISO 5",
+		"PhoneNumber": "56226926000"
+	},
+	{
+		"BrokerId": "51",
+		"BrokerName": "NEVASA",
+		"ShortName": "NEVA",
+		"FullName": "NEGOCIOS Y VALORES S.A. C. DE BOLSA",
+		"AltBrokerID": "144",
+		"RUT": "96586750-3",
+		"Address": "ROSARIO NORTE 555 PISO 15 LAS CONDES",
+		"PhoneNumber": "56224119800"
+	},
+	{
+		"BrokerId": "54",
+		"BrokerName": "BANESTADO",
+		"ShortName": "ESTC",
+		"FullName": "BANCOESTADO S.A. CORREDORES DE BOLSA",
+		"AltBrokerID": "137",
+		"RUT": "96564330-3",
+		"Address": "BANDERA 76 OF 601 Y 602",
+		"PhoneNumber": "56226707217"
+	},
+	{
+		"BrokerId": "58",
+		"BrokerName": "BCI",
+		"ShortName": "BCIC",
+		"FullName": "BCI CORREDOR DE BOLSA S.A.",
+		"AltBrokerID": "114",
+		"RUT": "96519800-8",
+		"Address": "MAGDALENA 140 PISO 14 LAS CONDES",
+		"PhoneNumber": "56226928900"
+	},
+	{
+		"BrokerId": "59",
+		"BrokerName": "TANNER",
+		"ShortName": "TANN",
+		"FullName": "TANNER CORREDORES DE BOLSA S.A.",
+		"AltBrokerID": "63",
+		"RUT": "80962600-8",
+		"Address": "APOQUINDO 3650 OFICINA 902 LAS CONDES",
+		"PhoneNumber": "56226964266"
+	},
+	{
+		"BrokerId": "61",
+		"BrokerName": "MERRILL",
+		"ShortName": "MERR",
+		"FullName": "MERRILL LYNCH CORREDORES DE BOLSA SPA",
+		"AltBrokerID": "69",
+		"RUT": "80993900-6",
+		"Address": "APOQUINDO 3500 PISO 9 LAS CONDES",
+		"PhoneNumber": "562224909500"
+	},
+	{
+		"BrokerId": "62",
+		"BrokerName": "MBI",
+		"ShortName": "MBI",
+		"FullName": "MBI CORREDORES DE BOLSA S.A.",
+		"AltBrokerID": "176",
+		"RUT": "96921130-0",
+		"Address": "AVDA. PRESIDENTE RIESCO 5711 OF 402",
+		"PhoneNumber": "562226553700"
+	},
+	{
+		"BrokerId": "66",
+		"BrokerName": "CREDICORP",
+		"ShortName": "CCOR",
+		"FullName": "CREDICORP CAPITAL S.A. CORRED. DE BOLSA",
+		"AltBrokerID": "97",
+		"RUT": "96489000-5",
+		"Address": "AV.APOQUINDO 3721 PISO 9",
+		"PhoneNumber": "56224501600"
+	},
+	{
+		"BrokerId": "69",
+		"BrokerName": "FINANZAS",
+		"ShortName": "FINZ",
+		"FullName": "FINANZAS Y NEGOCIOS S.A.  C. DE BOLSA",
+		"AltBrokerID": "73",
+		"RUT": "95319000-1",
+		"Address": "ISIDORA GOYENECHEA 3477 PISO 11",
+		"PhoneNumber": "56224991500"
+	},
+	{
+		"BrokerId": "70",
+		"BrokerName": "BTG",
+		"ShortName": "BTGC",
+		"FullName": "BTG PACTUAL CHILE SA CORREDORES DE BOLSA",
+		"AltBrokerID": "26",
+		"RUT": "84177300-4",
+		"Address": "AV. COSTANERA SUR 2730 PISO 21 LAS CONDE",
+		"PhoneNumber": "562225875100"
+	},
+	{
+		"BrokerId": "76",
+		"BrokerName": "EUROAMER",
+		"ShortName": "EURA",
+		"FullName": "EUROAMERICA CORREDORES DE BOLSA S.A.",
+		"AltBrokerID": "171",
+		"RUT": "96899230-9",
+		"Address": "AV. APOQUINDO 3885 PISO 21 LAS CONDES",
+		"PhoneNumber": "56225817000"
+	},
+	{
+		"BrokerId": "82",
+		"BrokerName": "BICE",
+		"ShortName": "BICC",
+		"FullName": "BICE INVERSIONES CORREDORES DE BOLSA S.A",
+		"AltBrokerID": "90",
+		"RUT": "79532990-0",
+		"Address": "TEATINOS 280 PISO 5",
+		"PhoneNumber": "56226922800"
+	},
+	{
+		"BrokerId": "85",
+		"BrokerName": "BBVA",
+		"ShortName": "BBVC",
+		"FullName": "BBVA CORREDORES DE BOLSA LTDA.",
+		"AltBrokerID": "128",
+		"RUT": "96535720-3",
+		"Address": "AV. COSTANERA SUR 2710 PISO 5 TORRE A",
+		"PhoneNumber": "56226792750"
+	},
+	{
+		"BrokerId": "86",
+		"BrokerName": "BANCHILE",
+		"ShortName": "CHIC",
+		"FullName": "BANCHILE CORREDORES DE BOLSA S.A.",
+		"AltBrokerID": "138",
+		"RUT": "96571220-8",
+		"Address": "AGUSTINAS 975 PISO 2",
+		"PhoneNumber": "56226612200"
+	},
+	{
+		"BrokerId": "88",
+		"BrokerName": "SANTANDER",
+		"ShortName": "SANC",
+		"FullName": "SANTANDER S.A. CORREDORES DE BOLSA",
+		"AltBrokerID": "173",
+		"RUT": "96683200-2",
+		"Address": "BANDERA 140 PISO 12",
+		"PhoneNumber": "56223363300"
+	},
+	{
+		"BrokerId": "90",
+		"BrokerName": "CONSORCIO",
+		"ShortName": "CONS",
+		"FullName": "CONSORCIO CORREDORES DE BOLSA S.A.",
+		"AltBrokerID": "170",
+		"RUT": "96772490-4",
+		"Address": "AVDA. EL BOSQUE SUR 130 PISO 13 LAS CONDES",
+		"PhoneNumber": "56222502691"
+	}
+]
+
