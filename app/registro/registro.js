@@ -12,11 +12,11 @@ app.controller('registroController', function($scope,Usuario) {
         Nombre: "",
         Apellido: "",
         Email: "",
-        Rut: "",
-        Pais: 0,
-        Region: 0,
-        Ciudad: 0,
-        Comuna: 0,
+        Telefono: "",
+        Pais,
+        Region,
+        Ciudad,
+        Comuna,
         Password: ""
 	}
 	
@@ -26,7 +26,7 @@ app.controller('registroController', function($scope,Usuario) {
 			Nombre: $scope.usuario.Nombre,
             Apellido: $scope.usuario.Apellido,
             Email: $scope.usuario.Email,
-            Rut: $scope.usuario.Rut,
+            Telefono: $scope.usuario.Telefono,
             Pais: $scope.usuario.Pais,
             Region: $scope.usuario.Region,
             Ciudad: $scope.usuario.Ciudad,
