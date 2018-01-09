@@ -1,6 +1,6 @@
 {
   "name": "kendo-ui",
-  "version": "2017.2.504+Official",
+  "version": "2017.3.1206",
   "dependencies": {
     "jquery": ">=1.9.1 <4"
   },
@@ -31,13 +31,14 @@
     "test",
     "tests"
   ],
-  "_release": "2017.2.504+Official",
+  "_release": "2017.3.1206",
   "_resolution": {
     "type": "version",
-    "tag": "2017.2.504+Official",
-    "commit": "55c3bcced28cbeca16c0802cca122b6580d963f7"
+    "tag": "2017.3.1206",
+    "commit": "5dfe8e7e826b33e8e5667597e98ac4c69189ca65"
   },
-  "_source": "https://bower.telerik.com/bower-kendo-ui.git",
-  "_target": "*",
-  "_originalSource": "https://bower.telerik.com/bower-kendo-ui.git"
+  "_source": "https://github.com/kendo-labs/bower-kendo-ui.git",
+  "_target": "^2017.3.1206",
+  "_originalSource": "kendo-ui-core",
+  "_direct": true
 }

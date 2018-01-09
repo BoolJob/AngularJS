@@ -517,6 +517,9 @@
                 if (that.options.isMaximized) {
                     return that;
                 }
+                if (that.options.pinned && !that._isPinned) {
+                    that.pin();
+                }
                 if (!that.options.pinned) {
                     scrollTop = documentWindow.scrollTop();
                     scrollLeft = documentWindow.scrollLeft();
@@ -656,12 +659,13 @@
                 }
             },
             _close: function (systemTriggered) {
-                var that = this, wrapper = that.wrapper, options = that.options, showOptions = this._animationOptions('open'), hideOptions = this._animationOptions('close'), doc = $(document);
-                if (wrapper.is(VISIBLE) && !that.trigger(CLOSE, { userTriggered: !systemTriggered })) {
-                    if (that._closing) {
-                        return;
-                    }
-                    that._closing = true;
+                var that = this, wrapper = that.wrapper, options = that.options, showOptions = this._animationOptions('open'), hideOptions = this._animationOptions('close'), doc = $(document), defaultPrevented;
+                if (that._closing) {
+                    return;
+                }
+                defaultPrevented = that.trigger(CLOSE, { userTriggered: !systemTriggered });
+                that._closing = !defaultPrevented;
+                if (wrapper.is(VISIBLE) && !defaultPrevented) {
                     options.visible = false;
                     $(KWINDOW).each(function (i, element) {
                         var contentElement = $(element).children(KWINDOWCONTENT);
@@ -843,14 +847,20 @@
                 that._restoreOverflowRule($('html'));
             },
             _storeOverflowRule: function ($element) {
+                if (this._isOverflowStored($element)) {
+                    return;
+                }
                 var overflowRule = $element.get(0).style.overflow;
-                if (overflowRule) {
+                if (typeof overflowRule === 'string') {
                     $element.data(DATADOCOVERFLOWRULE, overflowRule);
                 }
             },
+            _isOverflowStored: function ($element) {
+                return typeof $element.data(DATADOCOVERFLOWRULE) === 'string';
+            },
             _restoreOverflowRule: function ($element) {
                 var overflowRule = $element.data(DATADOCOVERFLOWRULE);
-                if (overflowRule) {
+                if (overflowRule !== null && overflowRule !== undefined) {
                     $element.css(OVERFLOW, overflowRule);
                     $element.removeData(DATADOCOVERFLOWRULE);
                 } else {
@@ -888,7 +898,6 @@
                     wrapper.children(KWINDOWTITLEBAR).find(KPIN).addClass('k-i-unpin').removeClass('k-i-pin');
                     that._isPinned = true;
                     that.options.pinned = true;
-                    that.options.draggable = false;
                 }
             },
             unpin: function () {
@@ -902,7 +911,6 @@
                     wrapper.children(KWINDOWTITLEBAR).find(KUNPIN).addClass('k-i-pin').removeClass('k-i-unpin');
                     that._isPinned = false;
                     that.options.pinned = false;
-                    that.options.draggable = true;
                 }
             },
             _onDocumentResize: function () {
