@@ -1,17 +1,17 @@
 /** 
- * Kendo UI v2017.2.504 (http://www.telerik.com/kendo-ui)                                                                                                                                               
- * Copyright 2017 Telerik AD. All rights reserved.                                                                                                                                                      
+ * Copyright 2017 Telerik AD                                                                                                                                                                            
  *                                                                                                                                                                                                      
- * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
- * http://www.telerik.com/purchase/license-agreement/kendo-ui-complete                                                                                                                                  
- * If you do not own a commercial license, this file shall be governed by the trial license terms.                                                                                                      
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
                                                                                                                                                                                                        
                                                                                                                                                                                                        
                                                                                                                                                                                                        
@@ -909,44 +909,6 @@
                 self.value(val);
             }
         });
-        defadvice('ui.AutoComplete', '$angular_getLogicValue', function () {
-            var options = this.self.options;
-            var values = this.self.value().split(options.separator);
-            var valuePrimitive = options.valuePrimitive;
-            var data = this.self.listView.selectedDataItems();
-            var dataItems = [];
-            for (var idx = 0, length = data.length; idx < length; idx++) {
-                var item = data[idx];
-                var dataValue = options.dataTextField ? item[options.dataTextField] : item;
-                for (var j = 0; j < values.length; j++) {
-                    if (dataValue === values[j]) {
-                        if (valuePrimitive) {
-                            dataItems.push(dataValue);
-                        } else {
-                            dataItems.push(item.toJSON());
-                        }
-                        break;
-                    }
-                }
-            }
-            return dataItems;
-        });
-        defadvice('ui.AutoComplete', '$angular_setLogicValue', function (value) {
-            if (value == null) {
-                value = [];
-            }
-            var self = this.self, dataTextField = self.options.dataTextField;
-            if (dataTextField && !self.options.valuePrimitive) {
-                if (value.length !== undefined) {
-                    value = $.map(value, function (item) {
-                        return item[dataTextField];
-                    });
-                } else {
-                    value = value[dataTextField];
-                }
-            }
-            self.value(value);
-        });
         defadvice('ui.Widget', '$angular_init', function (element, options) {
             var self = this.self;
             if (options && !$.isArray(options)) {
@@ -985,6 +947,9 @@
                 if (angular.isString(options.selectable)) {
                     cell = options.selectable.indexOf('cell') !== -1;
                     multiple = options.selectable.indexOf('multiple') !== -1;
+                }
+                if (widget._checkBoxSelection) {
+                    multiple = true;
                 }
                 elems = locals.selected = this.select();
                 items = locals.data = [];

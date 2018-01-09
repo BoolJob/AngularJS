@@ -13,10 +13,10 @@ app.controller('registroController', function($scope,Usuario) {
         Apellido: "",
         Email: "",
         Telefono: "",
-        Pais,
-        Region,
-        Ciudad,
-        Comuna,
+        Pais: 1,
+        Region: 1,
+        Ciudad: 1,
+        Comuna: 1,
         Password: ""
 	}
 	

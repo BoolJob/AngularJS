@@ -16,12 +16,12 @@
     "assets/lib"
   ],
   "dependencies": {
-    "kendo-ui": "https://bower.telerik.com/bower-kendo-ui.git",
     "angular": "^1.6.4",
     "angular-route": "^1.6.4",
     "angular-i18n": "^1.6.4",
     "underscore": "^1.8.3",
     "notifyjs": "^0.4.2",
-    "angular-resource": "^1.6.4"
+    "angular-resource": "^1.6.4",
+    "bootstrap": "^3.3.7"
   }
 }

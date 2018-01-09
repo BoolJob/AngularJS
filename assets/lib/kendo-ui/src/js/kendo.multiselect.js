@@ -1,17 +1,17 @@
 /** 
- * Kendo UI v2017.2.504 (http://www.telerik.com/kendo-ui)                                                                                                                                               
- * Copyright 2017 Telerik AD. All rights reserved.                                                                                                                                                      
+ * Copyright 2017 Telerik AD                                                                                                                                                                            
  *                                                                                                                                                                                                      
- * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
- * http://www.telerik.com/purchase/license-agreement/kendo-ui-complete                                                                                                                                  
- * If you do not own a commercial license, this file shall be governed by the trial license terms.                                                                                                      
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
                                                                                                                                                                                                        
                                                                                                                                                                                                        
                                                                                                                                                                                                        
@@ -25,7 +25,8 @@
 (function (f, define) {
     define('kendo.multiselect', [
         'kendo.list',
-        'kendo.mobile.scroller'
+        'kendo.mobile.scroller',
+        'kendo.virtuallist'
     ], f);
 }(function () {
     var __meta__ = {
@@ -50,7 +51,7 @@
         ]
     };
     (function ($, undefined) {
-        var kendo = window.kendo, ui = kendo.ui, List = ui.List, keys = kendo.keys, activeElement = kendo._activeElement, ObservableArray = kendo.data.ObservableArray, proxy = $.proxy, ID = 'id', LI = 'li', ACCEPT = 'accept', FILTER = 'filter', REBIND = 'rebind', OPEN = 'open', CLOSE = 'close', CHANGE = 'change', PROGRESS = 'progress', SELECT = 'select', DESELECT = 'deselect', ARIA_DISABLED = 'aria-disabled', FOCUSEDCLASS = 'k-state-focused', HIDDENCLASS = 'k-hidden', HOVERCLASS = 'k-state-hover', STATEDISABLED = 'k-state-disabled', DISABLED = 'disabled', READONLY = 'readonly', ns = '.kendoMultiSelect', CLICK = 'click' + ns, KEYDOWN = 'keydown' + ns, MOUSEENTER = 'mouseenter' + ns, MOUSELEAVE = 'mouseleave' + ns, HOVEREVENTS = MOUSEENTER + ' ' + MOUSELEAVE, quotRegExp = /"/g, isArray = $.isArray, styles = [
+        var kendo = window.kendo, ui = kendo.ui, List = ui.List, keys = $.extend({ A: 65 }, kendo.keys), activeElement = kendo._activeElement, ObservableArray = kendo.data.ObservableArray, proxy = $.proxy, ID = 'id', LI = 'li', ACCEPT = 'accept', FILTER = 'filter', REBIND = 'rebind', OPEN = 'open', CLOSE = 'close', CHANGE = 'change', PROGRESS = 'progress', SELECT = 'select', DESELECT = 'deselect', ARIA_DISABLED = 'aria-disabled', FOCUSEDCLASS = 'k-state-focused', SELECTEDCLASS = 'k-state-selected', HIDDENCLASS = 'k-hidden', HOVERCLASS = 'k-state-hover', STATEDISABLED = 'k-state-disabled', DISABLED = 'disabled', READONLY = 'readonly', ns = '.kendoMultiSelect', CLICK = 'click' + ns, KEYDOWN = 'keydown' + ns, MOUSEENTER = 'mouseenter' + ns, MOUSELEAVE = 'mouseleave' + ns, HOVEREVENTS = MOUSEENTER + ' ' + MOUSELEAVE, quotRegExp = /"/g, isArray = $.isArray, styles = [
                 'font-family',
                 'font-size',
                 'font-stretch',
@@ -159,6 +160,8 @@
                 this._accessors();
                 this._aria(this.tagList.attr(ID));
                 this._tagTemplate();
+                this._placeholder();
+                this._clearButton();
             },
             currentTag: function (candidate) {
                 var that = this;
@@ -268,6 +271,10 @@
                     that._state = ACCEPT;
                     that.listView.skipUpdate(true);
                 }
+                if (that.listView.bound() && that.listView.isFiltered()) {
+                    that.persistTagList = true;
+                    that._clearFilter();
+                }
                 that.element.blur();
             },
             _removeTag: function (tag) {
@@ -295,6 +302,7 @@
                     that._close();
                 };
                 if (customIndex === undefined) {
+                    that.persistTagList = false;
                     listView.select(listView.select()[position]).done(done);
                 } else {
                     option = that.element[0].children[customIndex];
@@ -312,9 +320,13 @@
             },
             _clearClick: function () {
                 var that = this;
-                that.tagList.children().each(function (index, tag) {
-                    that._removeTag($(tag));
-                });
+                if (that.options.tagMode === 'single') {
+                    that.value([]);
+                } else {
+                    that.tagList.children().each(function (index, tag) {
+                        that._removeTag($(tag));
+                    });
+                }
                 that.input.val('');
                 that._search();
                 that.trigger('change');
@@ -357,6 +369,7 @@
                 List.fn._filterSource.call(this, filter, force);
             },
             close: function () {
+                this._activeItem = null;
                 this.popup.close();
             },
             open: function () {
@@ -368,8 +381,11 @@
                     that._open = true;
                     that._state = REBIND;
                     that.listView.skipUpdate(true);
+                    that.persistTagList = true;
                     that._filterSource();
+                    that._focusItem();
                 } else if (that._allowOpening()) {
+                    that.popup._hovered = true;
                     that.popup.open();
                     that._focusItem();
                 }
@@ -428,11 +444,13 @@
                     value = value.slice(0, maxSelectedItems);
                 }
                 if (clearFilters) {
+                    that.persistTagList = false;
                     that._clearFilter();
                 }
                 listView.value(value);
                 that._old = listView.value();
                 if (!clearFilters) {
+                    that.persistTagList = false;
                     that._fetchData();
                 }
             },
@@ -534,43 +552,67 @@
                 var item = e.item;
                 e.preventDefault();
                 that._select(item).done(function () {
+                    that._activeItem = item;
                     that._change();
                     that._close();
                 });
+            },
+            _getActiveItem: function () {
+                return this._activeItem || $(this.listView.items()[this._getSelectedIndices().length - 1]) || this.listView.focus();
+            },
+            _getSelectedIndices: function () {
+                return this.listView._selectedIndices || this.listView._selectedIndexes;
             },
             _keydown: function (e) {
                 var that = this;
                 var key = e.keyCode;
                 var tag = that._currentTag;
                 var listView = that.listView;
-                var current = listView.focus();
                 var hasValue = that.input.val();
                 var isRtl = kendo.support.isRtl(that.wrapper);
                 var visible = that.popup.visible();
+                var dir = 0;
+                var activeItemIdx;
                 if (key === keys.DOWN) {
                     e.preventDefault();
                     if (!visible) {
                         that.open();
-                        if (!current) {
+                        if (!listView.focus()) {
                             listView.focusFirst();
                         }
                         return;
                     }
-                    if (current) {
+                    if (listView.focus()) {
+                        if (!that._activeItem && e.shiftKey) {
+                            that._activeItem = listView.focus();
+                            dir = -1;
+                        }
+                        activeItemIdx = listView.getElementIndex(that._getActiveItem()[0]);
                         listView.focusNext();
                         if (!listView.focus()) {
                             listView.focusLast();
+                        } else {
+                            if (e.shiftKey) {
+                                that._selectRange(activeItemIdx, listView.getElementIndex(listView.focus()[0]) + dir);
+                            }
                         }
                     } else {
                         listView.focusFirst();
                     }
                 } else if (key === keys.UP) {
                     if (visible) {
-                        if (current) {
-                            listView.focusPrev();
+                        if (!that._activeItem && e.shiftKey) {
+                            that._activeItem = listView.focus();
+                            dir = 1;
                         }
+                        activeItemIdx = listView.getElementIndex(that._getActiveItem()[0]);
+                        listView.focusPrev();
                         if (!listView.focus()) {
                             that.close();
+                        } else {
+                            if (e.shiftKey) {
+                                that._selectRange(activeItemIdx, listView.getElementIndex(listView.focus()[0]) + dir);
+                            }
                         }
                     }
                     e.preventDefault();
@@ -586,22 +628,56 @@
                         tag = tag.next();
                         that.currentTag(tag[0] ? tag : null);
                     }
+                } else if (e.ctrlKey && key === keys.A && visible) {
+                    if (this._getSelectedIndices().length === listView.items().length) {
+                        that._activeItem = null;
+                    }
+                    if (listView.items().length) {
+                        that._selectRange(0, listView.items().length - 1);
+                    }
                 } else if (key === keys.ENTER && visible) {
-                    that._select(current).done(function () {
+                    that._select(listView.focus()).done(function () {
                         that._change();
                         that._close();
                     });
+                    e.preventDefault();
+                } else if (key === keys.SPACEBAR && e.ctrlKey && visible) {
+                    if (that._activeItem && listView.focus() && listView.focus()[0] === that._activeItem[0]) {
+                        that._activeItem = null;
+                    }
+                    if (!$(listView.focus()).hasClass(SELECTEDCLASS)) {
+                        that._activeItem = listView.focus();
+                    }
+                    that._select(listView.focus()).done(function () {
+                        that._change();
+                    });
+                    e.preventDefault();
+                } else if (key === keys.SPACEBAR && e.shiftKey && visible) {
+                    var activeIndex = listView.getElementIndex(that._getActiveItem());
+                    var currentIndex = listView.getElementIndex(listView.focus());
+                    if (activeIndex !== undefined && currentIndex !== undefined) {
+                        that._selectRange(activeIndex, currentIndex);
+                    }
                     e.preventDefault();
                 } else if (key === keys.ESC) {
                     if (visible) {
                         e.preventDefault();
                     } else {
-                        that.currentTag(null);
+                        that.tagList.children().each(function (index, tag) {
+                            that._removeTag($(tag));
+                        });
                     }
                     that.close();
                 } else if (key === keys.HOME) {
                     if (visible) {
-                        listView.focusFirst();
+                        if (!listView.focus()) {
+                            that.close();
+                        } else {
+                            if (e.ctrlKey && e.shiftKey) {
+                                that._selectRange(listView.getElementIndex(listView.focus()[0]), 0);
+                            }
+                            listView.focusFirst();
+                        }
                     } else if (!hasValue) {
                         tag = that.tagList[0].firstChild;
                         if (tag) {
@@ -610,7 +686,14 @@
                     }
                 } else if (key === keys.END) {
                     if (visible) {
-                        listView.focusLast();
+                        if (!listView.focus()) {
+                            that.close();
+                        } else {
+                            if (e.ctrlKey && e.shiftKey) {
+                                that._selectRange(listView.getElementIndex(listView.focus()[0]), listView.element.children().length - 1);
+                            }
+                            listView.focusLast();
+                        }
                     } else if (!hasValue) {
                         tag = that.tagList[0].lastChild;
                         if (tag) {
@@ -618,6 +701,7 @@
                         }
                     }
                 } else if ((key === keys.DELETE || key === keys.BACKSPACE) && !hasValue) {
+                    that._state = '';
                     if (that.options.tagMode === 'single') {
                         listView.value([]);
                         that._change();
@@ -690,7 +774,7 @@
                 that._scale();
             },
             _scale: function () {
-                var that = this, wrapper = that.wrapper, wrapperWidth = wrapper.width(), span = that._span.text(that.input.val()), textWidth;
+                var that = this, wrapper = that.wrapper.find('.k-multiselect-wrap'), wrapperWidth = wrapper.width(), span = that._span.text(that.input.val()), textWidth;
                 if (!wrapper.is(':visible')) {
                     span.appendTo(document.documentElement);
                     wrapperWidth = textWidth = span.width() + 25;
@@ -815,6 +899,16 @@
                     };
                 });
             },
+            updatePersistTagList: function (added, removed) {
+                if (this.persistTagList.added && this.persistTagList.added.length === removed.length && this.persistTagList.removed && this.persistTagList.removed.length === added.length) {
+                    this.persistTagList = false;
+                } else {
+                    this.persistTagList = {
+                        added: added,
+                        removed: removed
+                    };
+                }
+            },
             _selectValue: function (added, removed) {
                 var that = this;
                 var values = that.value();
@@ -824,6 +918,10 @@
                 var removedItem;
                 var addedItem;
                 var idx;
+                if (this.persistTagList) {
+                    this.updatePersistTagList(added, removed);
+                    return;
+                }
                 that._angularTagItems('cleanup');
                 if (that.options.tagMode === 'multiple') {
                     for (idx = removed.length - 1; idx > -1; idx--) {
@@ -871,7 +969,7 @@
                 if (that._state === REBIND) {
                     that._state = '';
                 }
-                if (!that._allowSelection()) {
+                if (!that._allowSelection() && !isSelected) {
                     return resolved;
                 }
                 if (that.trigger(isSelected ? DESELECT : SELECT, {
@@ -881,12 +979,57 @@
                     that._close();
                     return resolved;
                 }
+                that.persistTagList = false;
                 return listView.select(candidate).done(function () {
                     that._placeholder();
                     if (that._state === FILTER) {
                         that._state = ACCEPT;
                         listView.skipUpdate(true);
                     }
+                });
+            },
+            _selectRange: function (startIndex, endIndex) {
+                var that = this;
+                var listView = this.listView;
+                var maxSelectedItems = this.options.maxSelectedItems;
+                var indices = this._getSelectedIndices().slice();
+                var indicesToSelect = [];
+                var i;
+                if (startIndex < endIndex) {
+                    for (i = startIndex; i <= endIndex; i++) {
+                        indicesToSelect.push(i);
+                    }
+                } else {
+                    for (i = startIndex; i >= endIndex; i--) {
+                        indicesToSelect.push(i);
+                    }
+                }
+                if (maxSelectedItems !== null && indicesToSelect.length > maxSelectedItems) {
+                    indicesToSelect = indicesToSelect.slice(0, maxSelectedItems);
+                }
+                for (i = 0; i < indicesToSelect.length; i++) {
+                    var index = indicesToSelect[i];
+                    if (this._getSelectedIndices().indexOf(index) == -1) {
+                        indices.push(index);
+                    } else {
+                        indices.splice(indices.indexOf(index), 1);
+                    }
+                }
+                if (!indices.length) {
+                    return;
+                }
+                that.persistTagList = false;
+                return listView.select(indices).done(function () {
+                    indices.forEach(function (index) {
+                        var dataItem = listView.dataItemByIndex(index);
+                        var candidate = listView.element.children()[index];
+                        var isSelected = $(candidate).hasClass('k-state-selected');
+                        that.trigger(isSelected ? SELECT : DESELECT, {
+                            dataItem: dataItem,
+                            item: candidate
+                        });
+                    });
+                    that._change();
                 });
             },
             _input: function () {
@@ -934,12 +1077,10 @@
                 this._loading = $('<span class="k-icon k-i-loading ' + HIDDENCLASS + '"></span>').insertAfter(this.input);
             },
             _clearButton: function () {
-                this._clear = $('<span deselectable="on" class="k-icon k-clear-value k-i-close" title="clear"></span>').attr({
-                    'role': 'button',
-                    'tabIndex': -1
-                });
+                List.fn._clearButton.call(this);
                 if (this.options.clearButton) {
                     this._clear.insertAfter(this.input);
+                    this.wrapper.addClass('k-multiselect-clearable');
                 }
             },
             _textContainer: function () {

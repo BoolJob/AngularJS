@@ -1,17 +1,17 @@
 /** 
- * Kendo UI v2017.2.504 (http://www.telerik.com/kendo-ui)                                                                                                                                               
- * Copyright 2017 Telerik AD. All rights reserved.                                                                                                                                                      
+ * Copyright 2017 Telerik AD                                                                                                                                                                            
  *                                                                                                                                                                                                      
- * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
- * http://www.telerik.com/purchase/license-agreement/kendo-ui-complete                                                                                                                                  
- * If you do not own a commercial license, this file shall be governed by the trial license terms.                                                                                                      
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
                                                                                                                                                                                                        
                                                                                                                                                                                                        
                                                                                                                                                                                                        
@@ -56,6 +56,7 @@
                 that.element.addClass(SELECTABLE);
                 that.relatedTarget = that.options.relatedTarget;
                 multiple = that.options.multiple;
+                INPUTSELECTOR = that.options.inputSelectors;
                 if (this.options.aria && multiple) {
                     that.element.attr('aria-multiselectable', true);
                 }
@@ -63,7 +64,8 @@
                     global: true,
                     allowSelection: true,
                     filter: (!supportEventDelegation ? '.' + SELECTABLE + ' ' : '') + that.options.filter,
-                    tap: proxy(that._tap, that)
+                    tap: proxy(that._tap, that),
+                    touchAction: multiple ? 'none' : 'pan-x pan-y'
                 });
                 if (multiple) {
                     that.userEvents.bind('start', proxy(that._start, that)).bind('move', proxy(that._move, that)).bind('end', proxy(that._end, that)).bind('select', proxy(that._select, that));
@@ -73,6 +75,7 @@
             options: {
                 name: 'Selectable',
                 filter: '>*',
+                inputSelectors: INPUTSELECTOR,
                 multiple: false,
                 relatedTarget: $.noop
             },
@@ -102,13 +105,13 @@
                 }
                 target = target.add(that.relatedTarget(target));
                 if (shiftKey) {
-                    that.selectRange(that._firstSelectee(), target);
+                    that.selectRange(that._firstSelectee(), target, e);
                 } else {
                     if (selected && ctrlKey) {
                         that._unselect(target);
-                        that._notify(CHANGE);
+                        that._notify(CHANGE, e);
                     } else {
-                        that.value(target);
+                        that.value(target, e);
                     }
                     that._lastActive = that._downTarget = target;
                 }
@@ -158,13 +161,13 @@
                 that._invalidateSelectables(position, e.event.ctrlKey || e.event.metaKey);
                 e.preventDefault();
             },
-            _end: function () {
+            _end: function (e) {
                 var that = this;
                 that._marquee.remove();
                 that._unselect(that.element.find(that.options.filter + '.' + UNSELECTING)).removeClass(UNSELECTING);
                 var target = that.element.find(that.options.filter + '.' + ACTIVE);
                 target = target.add(that.relatedTarget(target));
-                that.value(target);
+                that.value(target, e);
                 that._lastActive = that._downTarget;
                 that._items = null;
             },
@@ -190,13 +193,13 @@
                     }
                 }
             },
-            value: function (val) {
+            value: function (val, e) {
                 var that = this, selectElement = proxy(that._selectElement, that);
                 if (val) {
                     val.each(function () {
                         selectElement(this);
                     });
-                    that._notify(CHANGE);
+                    that._notify(CHANGE, e);
                     return;
                 }
                 return that.element.find(that.options.filter + '.' + SELECTED);
@@ -252,7 +255,7 @@
                 var items = this.element.find(this.options.filter + '.' + SELECTED);
                 this._unselect(items);
             },
-            selectRange: function (start, end) {
+            selectRange: function (start, end, e) {
                 var that = this, idx, tmp, items;
                 that.clear();
                 if (that.element.length > 1) {
@@ -274,7 +277,7 @@
                 for (idx = start; idx <= end; idx++) {
                     that._selectElement(items[idx]);
                 }
-                that._notify(CHANGE);
+                that._notify(CHANGE, e);
             },
             destroy: function () {
                 var that = this;

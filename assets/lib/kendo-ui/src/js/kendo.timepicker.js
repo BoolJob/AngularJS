@@ -1,17 +1,17 @@
 /** 
- * Kendo UI v2017.2.504 (http://www.telerik.com/kendo-ui)                                                                                                                                               
- * Copyright 2017 Telerik AD. All rights reserved.                                                                                                                                                      
+ * Copyright 2017 Telerik AD                                                                                                                                                                            
  *                                                                                                                                                                                                      
- * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
- * http://www.telerik.com/purchase/license-agreement/kendo-ui-complete                                                                                                                                  
- * If you do not own a commercial license, this file shall be governed by the trial license terms.                                                                                                      
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
                                                                                                                                                                                                        
                                                                                                                                                                                                        
                                                                                                                                                                                                        
@@ -23,7 +23,10 @@
 
 */
 (function (f, define) {
-    define('kendo.timepicker', ['kendo.popup'], f);
+    define('kendo.timepicker', [
+        'kendo.popup',
+        'kendo.dateinput'
+    ], f);
 }(function () {
     var __meta__ = {
         id: 'timepicker',
@@ -395,11 +398,21 @@
                     that.readonly(element.is('[readonly]'));
                 }
                 if (options.dateInput) {
+                    var min = options.min;
+                    var max = options.max;
+                    var today = new DATE();
+                    if (getMilliseconds(min) == getMilliseconds(max)) {
+                        min = new DATE(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
+                        max = new DATE(today.getFullYear(), today.getMonth(), today.getDate(), 24, 0, 0);
+                    } else {
+                        min = new DATE(today.getFullYear(), today.getMonth(), today.getDate(), min.getHours(), min.getMinutes(), min.getSeconds(), min.getMilliseconds());
+                        max = new DATE(today.getFullYear(), today.getMonth(), today.getDate(), max.getHours(), max.getMinutes(), max.getSeconds(), max.getMilliseconds());
+                    }
                     that._dateInput = new ui.DateInput(element, {
                         culture: options.culture,
                         format: options.format,
-                        min: options.min,
-                        max: options.max,
+                        min: min,
+                        max: max,
                         value: options.value
                     });
                 }
@@ -417,7 +430,8 @@
                 value: null,
                 interval: 30,
                 height: 200,
-                animation: {}
+                animation: {},
+                dateInput: false
             },
             events: [
                 OPEN,
@@ -569,12 +583,19 @@
                 $(e.currentTarget).toggleClass(HOVER, e.type === 'mouseenter');
             },
             _update: function (value) {
-                var that = this, options = that.options, timeView = that.timeView, date = timeView._parse(value);
+                var that = this, options = that.options, timeView = that.timeView, date = timeView._parse(value), current = that._value, isSameType = date === null && current === null || date instanceof Date && current instanceof Date, formattedValue;
                 if (!isInRange(date, options.min, options.max)) {
                     date = null;
                 }
+                if (+date === +current && isSameType) {
+                    formattedValue = kendo.toString(date, options.format, options.culture);
+                    if (formattedValue !== value) {
+                        that.element.val(date === null ? value : formattedValue);
+                    }
+                    return date;
+                }
                 that._value = date;
-                if (that._dateInput) {
+                if (that._dateInput && date) {
                     that._dateInput.value(date || value);
                 } else {
                     that.element.val(kendo.toString(date || value, options.format, options.culture));

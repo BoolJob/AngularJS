@@ -1,5 +1,4 @@
 var app = angular.module('app', [
-	'kendo.directives', 
 	'ngSanitize', 
 	'ngModal',
     'ngRoute',
@@ -30,7 +29,13 @@ app.config(function ($routeProvider, $locationProvider) {
 			redirectTo: '/'
 		});
 
-	$locationProvider.hashPrefix('');
+	//$locationProvider.hashPrefix('!');
+	// use the HTML5 History API
+	$locationProvider.html5Mode({
+		enabled: true,
+		requireBase: false
+	});
+    $locationProvider.hashPrefix('!');
 });
 
 app.run(function($rootScope, ButtonConfigLoader) {

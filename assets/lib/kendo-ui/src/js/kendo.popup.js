@@ -1,17 +1,17 @@
 /** 
- * Kendo UI v2017.2.504 (http://www.telerik.com/kendo-ui)                                                                                                                                               
- * Copyright 2017 Telerik AD. All rights reserved.                                                                                                                                                      
+ * Copyright 2017 Telerik AD                                                                                                                                                                            
  *                                                                                                                                                                                                      
- * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
- * http://www.telerik.com/purchase/license-agreement/kendo-ui-complete                                                                                                                                  
- * If you do not own a commercial license, this file shall be governed by the trial license terms.                                                                                                      
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
                                                                                                                                                                                                        
                                                                                                                                                                                                        
                                                                                                                                                                                                        
@@ -65,8 +65,13 @@
                 }
                 parentPopup = $(that.options.anchor).closest('.k-popup,.k-group').filter(':not([class^=km-])');
                 options.appendTo = $($(options.appendTo)[0] || parentPopup[0] || document.body);
-                that.element.hide().addClass('k-popup k-group k-reset').toggleClass('k-rtl', !!options.isRtl).css({ position: ABSOLUTE }).appendTo(options.appendTo).on('mouseenter' + NS, function () {
+                that.element.hide().addClass('k-popup k-group k-reset').toggleClass('k-rtl', !!options.isRtl).css({ position: ABSOLUTE }).appendTo(options.appendTo).attr('aria-hidden', true).on('mouseenter' + NS, function () {
                     that._hovered = true;
+                }).on('wheel' + NS, function (e) {
+                    var scrollArea = $(this).find('.k-list').parent();
+                    if (scrollArea.scrollTop() === 0 && e.originalEvent.deltaY < 0 || scrollArea.scrollTop() === scrollArea.prop('scrollHeight') - scrollArea.prop('offsetHeight') && e.originalEvent.deltaY > 0) {
+                        e.preventDefault();
+                    }
                 }).on('mouseleave' + NS, function () {
                     that._hovered = false;
                 });
@@ -204,7 +209,7 @@
                         overflow: HIDDEN,
                         display: 'block',
                         position: ABSOLUTE
-                    });
+                    }).attr('aria-hidden', false);
                     if (support.mobileOS.android) {
                         wrapper.css(TRANSFORM, 'translatez(0)');
                     }
@@ -217,7 +222,7 @@
                     if (options.anchor != BODY) {
                         that._showDirClass(animation);
                     }
-                    element.data(EFFECTS, animation.effects).kendoStop(true).kendoAnimate(animation);
+                    element.data(EFFECTS, animation.effects).kendoStop(true).kendoAnimate(animation).attr('aria-hidden', false);
                 }
             },
             _location: function (isFixed) {
@@ -313,8 +318,8 @@
                         }
                         that._closing = true;
                     }
-                    that.element.kendoStop(true);
-                    wrap.css({ overflow: HIDDEN });
+                    that.element.kendoStop(true).attr('aria-hidden', true);
+                    wrap.css({ overflow: HIDDEN }).attr('aria-hidden', true);
                     that.element.kendoAnimate(animation);
                     if (skipEffects) {
                         that._animationClose();
@@ -406,7 +411,8 @@
                     viewportHeight = viewport.height();
                 }
                 if (isWindow && docEl.scrollHeight - docEl.clientHeight > 0) {
-                    viewportWidth -= kendo.support.scrollbar();
+                    var sign = options.isRtl ? -1 : 1;
+                    viewportWidth -= sign * kendo.support.scrollbar();
                 }
                 siblingContainer = anchor.parents().filter(wrapper.siblings());
                 if (siblingContainer[0]) {
@@ -466,7 +472,7 @@
                 return location.left != flipPos.left || location.top != flipPos.top;
             },
             _align: function (origin, position) {
-                var that = this, element = that.wrapper, anchor = $(that.options.anchor), verticalOrigin = origin[0], horizontalOrigin = origin[1], verticalPosition = position[0], horizontalPosition = position[1], anchorOffset = getOffset(anchor), appendTo = $(that.options.appendTo), appendToOffset, width = outerWidth(element), height = outerHeight(element), anchorWidth = outerWidth(anchor), anchorHeight = outerHeight(anchor), top = anchorOffset.top, left = anchorOffset.left, round = Math.round;
+                var that = this, element = that.wrapper, anchor = $(that.options.anchor), verticalOrigin = origin[0], horizontalOrigin = origin[1], verticalPosition = position[0], horizontalPosition = position[1], anchorOffset = getOffset(anchor), appendTo = $(that.options.appendTo), appendToOffset, width = outerWidth(element), height = outerHeight(element) || outerHeight(element.children().first()), anchorWidth = outerWidth(anchor), anchorHeight = outerHeight(anchor), top = anchorOffset.top, left = anchorOffset.left, round = Math.round;
                 if (appendTo[0] != document.body) {
                     appendToOffset = getOffset(appendTo);
                     top -= appendToOffset.top;
@@ -503,6 +509,7 @@
             }
         });
         ui.plugin(Popup);
+        var stableSort = kendo.support.stableSort;
         var tabKeyTrapNS = 'kendoTabKeyTrap';
         var focusableNodesSelector = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex], *[contenteditable]';
         var TabKeyTrap = Class.extend({
@@ -524,31 +531,56 @@
                 return true;
             },
             _keepInTrap: function (e) {
-                if (e.which !== 9 || !this.shouldTrap()) {
+                if (e.which !== 9 || !this.shouldTrap() || e.isDefaultPrevented()) {
                     return;
                 }
-                var target = e.target;
-                var elements = this.element.find(focusableNodesSelector).filter(':visible[tabindex!=-1]');
-                var focusableItems = elements.sort(function (prevEl, nextEl) {
-                    return prevEl.tabIndex - nextEl.tabIndex;
-                });
-                var focusableItemsCount = focusableItems.length;
-                var lastIndex = focusableItemsCount - 1;
-                var focusedItemIndex = focusableItems.index(target);
-                if (e.shiftKey) {
-                    if (focusedItemIndex === 0) {
-                        focusableItems.get(lastIndex).focus();
-                    } else {
-                        focusableItems.get(focusedItemIndex - 1).focus();
-                    }
-                } else {
-                    if (focusedItemIndex === lastIndex) {
-                        focusableItems.get(0).focus();
-                    } else {
-                        focusableItems.get(focusedItemIndex + 1).focus();
-                    }
-                }
+                var elements = this._focusableElements();
+                var sortedElements = this._sortFocusableElements(elements);
+                var next = this._nextFocusable(e, sortedElements);
+                this._focus(next);
                 e.preventDefault();
+            },
+            _focusableElements: function () {
+                var elements = this.element.find(focusableNodesSelector).filter(function (i, item) {
+                    return item.tabIndex >= 0 && $(item).is(':visible') && !$(item).is(':disabled');
+                });
+                if (this.element.is('[tabindex]')) {
+                    elements.push(this.element[0]);
+                }
+                return elements;
+            },
+            _sortFocusableElements: function (elements) {
+                var sortedElements;
+                if (stableSort) {
+                    sortedElements = elements.sort(function (prev, next) {
+                        return prev.tabIndex - next.tabIndex;
+                    });
+                } else {
+                    var attrName = '__k_index';
+                    elements.each(function (i, item) {
+                        item.setAttribute(attrName, i);
+                    });
+                    sortedElements = elements.sort(function (prev, next) {
+                        return prev.tabIndex === next.tabIndex ? parseInt(prev.getAttribute(attrName), 10) - parseInt(next.getAttribute(attrName), 10) : prev.tabIndex - next.tabIndex;
+                    });
+                    elements.removeAttr(attrName);
+                }
+                return sortedElements;
+            },
+            _nextFocusable: function (e, elements) {
+                var count = elements.length;
+                var current = elements.index(e.target);
+                return elements.get((current + (e.shiftKey ? -1 : 1)) % count);
+            },
+            _focus: function (element) {
+                element.focus();
+                if (element.nodeName == 'INPUT' && element.setSelectionRange && this._haveSelectionRange(element)) {
+                    element.setSelectionRange(0, element.value.length);
+                }
+            },
+            _haveSelectionRange: function (element) {
+                var elementType = element.type.toLowerCase();
+                return elementType === 'text' || elementType === 'search' || elementType === 'url' || elementType === 'tel' || elementType === 'password';
             }
         });
         ui.Popup.TabKeyTrap = TabKeyTrap;

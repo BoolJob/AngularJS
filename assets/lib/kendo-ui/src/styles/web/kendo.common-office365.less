@@ -1,17 +1,17 @@
 /** 
- * Kendo UI v2017.2.504 (http://www.telerik.com/kendo-ui)                                                                                                                                               
- * Copyright 2017 Telerik AD. All rights reserved.                                                                                                                                                      
+ * Copyright 2017 Telerik AD                                                                                                                                                                            
  *                                                                                                                                                                                                      
- * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
- * http://www.telerik.com/purchase/license-agreement/kendo-ui-complete                                                                                                                                  
- * If you do not own a commercial license, this file shall be governed by the trial license terms.                                                                                                      
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
                                                                                                                                                                                                        
                                                                                                                                                                                                        
                                                                                                                                                                                                        
@@ -26,7 +26,9 @@
 @input-indent: .571em;
 @editor-icon-size: 2em;
 @menu-link-padding: .5em 1.1em .4em;
-@button-padding: 2px 7px 2px;
+@button-padding-x: .714em;
+@button-padding-y: .429em;
+@button-padding: @button-padding-y @button-padding-x;
 @treeview-inner-padding: 1px 0.3333em 1px 0.25em;
 @treeview-inner-margin: 1px 0 1px 0.16666em;
 @scheduler-link-padding: 0 1.1em;
@@ -81,9 +83,14 @@
     padding-bottom: 0.3em;
 }
 
-.k-button {
+.k-button,
+.k-toolbar .k-button {
     line-height: 1.143em;
-    padding: .429em .714em;
+}
+
+.k-button-icon {
+    height: calc(1.143em + (2*@button-padding-y) + 2px); // ensure inline-flex height
+    width: calc(1.143em + (2*@button-padding-y) + 2px);
 }
 
 .k-filter-row .k-button {
@@ -101,7 +108,6 @@ span.k-selectbox .k-input {
 
 span.k-combobox-clearable .k-input {
     height: (@input-height + .286em);
-    padding-right: 1.9em;
 }
 
  input.k-textbox {
@@ -305,6 +311,11 @@ span.k-tooltip {
     padding-left: 1.286em;
 }
 
+.k-rtl .k-grid-header th.k-header
+{
+    padding-right: 1.286em;
+}
+
 .k-grid .k-grouping-row td {
     padding: .6em .6em 0.643em;
     font-weight: normal;
@@ -433,6 +444,7 @@ span.k-tooltip {
         border-radius: 0;
         border-style: solid;
         bottom: -1px;
+        margin: 0 17px;
     }
 
     .k-gantt-timeline th {
@@ -456,6 +468,10 @@ span.k-tooltip {
 
 .k-tabstrip > .k-content {
     margin: 0;
+}
+
+.k-tabstrip > .k-button.k-bare {
+    top: .1em;
 }
 
 .k-panelbar .k-tabstrip-items .k-link {
@@ -508,12 +524,9 @@ span.k-tooltip {
     line-height: 2.86em;
 }
 
-.k-toolbar .k-button {
-    padding: .143em 1em;
-}
-
 .k-toolbar .k-split-button-arrow {
     padding: .143em .4em;
+    height: calc(1.143em + 2*@button-padding-y + 2px);
 }
 
 .k-toolbar .k-overflow-anchor {
@@ -526,17 +539,7 @@ span.k-tooltip {
 }
 
 .k-toolbar .k-button-group .k-button {
-    padding: .143em;
     margin-right: 0.143em;
-}
-
-.k-toolbar .k-button .k-icon {
-    margin-top: -10px;
-    margin-bottom: -4px;
-}
-
-.k-toolbar .k-split-button-arrow .k-i-arrow-60-down {
-    margin-top: -7px;
 }
 
 .k-toolbar .k-overflow-anchor .k-icon {
@@ -549,7 +552,7 @@ table.k-editor {
 }
 
 .k-editor .k-editor-toolbar-wrap,
-.k-editor .k-editable-area {
+.k-editor .k-editable-area .k-content {
     border-width: 1px 0 0;
 }
 
@@ -557,9 +560,10 @@ table.k-editor {
     padding-left: 4px;
 }
 
-.k-editor .k-editable-area {
-    padding-left: 25px;
+.k-editor.k-resizable .k-editable-area {
+    padding-bottom: 20px;
 }
+
 
 .k-progressbar,
 .k-progressbar-horizontal > .k-state-selected,
@@ -657,11 +661,6 @@ table.k-editor {
     background: transparent;
 }
 
-.k-slider .k-button .k-icon
-{
-    margin-top: 4px;
-}
-
 .k-widget.k-flatcolorpicker .k-hue-slider .k-draghandle {
     margin-top: -1px;
     box-shadow: none;
@@ -720,7 +719,6 @@ div.k-window-content {
 }
 
 .k-upload-sync .k-upload-button,
-.k-ie8 .k-upload-button,
 .k-ie9 .k-upload-button {
     margin: .36em;
 }
@@ -835,16 +833,7 @@ div.k-window-content {
     }
 }
 
-.k-spreadsheet-window .k-page-landscape {
-    top: 25%;
-}
-
 .k-spreadsheet-window {
-    .hint-wrapper:before {
-        margin-left: -1em;
-        padding-right: 1em;
-        padding-left: 1em;
-    }
 
     .k-edit-label > label {
         vertical-align: middle;
@@ -873,13 +862,8 @@ div.k-spreadsheet-window {
 
 .k-grid {
     .k-edit-cell {
-        input[type='checkbox'],
-        input.k-checkbox {
-            margin-left: calc(1em + 4px);
-
-            + label.k-checkbox-label {
-                margin-left: 1em;
-            }
+        input.k-checkbox + label.k-checkbox-label {
+            margin-left: 1em;
         }
     }
 }

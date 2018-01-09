@@ -1,17 +1,17 @@
 /** 
- * Kendo UI v2017.2.504 (http://www.telerik.com/kendo-ui)                                                                                                                                               
- * Copyright 2017 Telerik AD. All rights reserved.                                                                                                                                                      
+ * Copyright 2017 Telerik AD                                                                                                                                                                            
  *                                                                                                                                                                                                      
- * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
- * http://www.telerik.com/purchase/license-agreement/kendo-ui-complete                                                                                                                                  
- * If you do not own a commercial license, this file shall be governed by the trial license terms.                                                                                                      
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
                                                                                                                                                                                                        
                                                                                                                                                                                                        
                                                                                                                                                                                                        
@@ -33,7 +33,7 @@
         depends: ['popup']
     };
     (function ($, undefined) {
-        var kendo = window.kendo, ui = kendo.ui, activeElement = kendo._activeElement, touch = kendo.support.touch && kendo.support.mobileOS, MOUSEDOWN = 'mousedown', CLICK = 'click', DELAY = 30, SCROLLSPEED = 50, extend = $.extend, proxy = $.proxy, each = $.each, template = kendo.template, keys = kendo.keys, Widget = ui.Widget, excludedNodesRegExp = /^(ul|a|div)$/i, NS = '.kendoMenu', IMG = 'img', OPEN = 'open', MENU = 'k-menu', LINK = 'k-link', LAST = 'k-last', CLOSE = 'close', TIMER = 'timer', FIRST = 'k-first', IMAGE = 'k-image', SELECT = 'select', ZINDEX = 'zIndex', ACTIVATE = 'activate', DEACTIVATE = 'deactivate', POINTERDOWN = 'touchstart' + NS + ' MSPointerDown' + NS + ' pointerdown' + NS, pointers = kendo.support.pointers, msPointers = kendo.support.msPointers, allPointers = msPointers || pointers, MOUSEENTER = pointers ? 'pointerenter' : msPointers ? 'MSPointerEnter' : 'mouseenter', MOUSELEAVE = pointers ? 'pointerleave' : msPointers ? 'MSPointerLeave' : 'mouseleave', MOUSEWHEEL = 'DOMMouseScroll' + NS + ' mousewheel' + NS, RESIZE = kendo.support.resize + NS, SCROLLWIDTH = 'scrollWidth', SCROLLHEIGHT = 'scrollHeight', OFFSETWIDTH = 'offsetWidth', OFFSETHEIGHT = 'offsetHeight', POPUP_ID_ATTR = 'group', POPUP_OPENER_ATTR = 'groupparent', DOCUMENT_ELEMENT = $(document.documentElement), KENDOPOPUP = 'kendoPopup', DEFAULTSTATE = 'k-state-default', HOVERSTATE = 'k-state-hover', FOCUSEDSTATE = 'k-state-focused', DISABLEDSTATE = 'k-state-disabled', SELECTEDSTATE = 'k-state-selected', menuSelector = '.k-menu', groupSelector = '.k-menu-group', animationContainerSelector = '.k-animation-container', popupSelector = groupSelector + ',' + animationContainerSelector, allItemsSelector = ':not(.k-list) > .k-item', disabledSelector = '.k-item.k-state-disabled', itemSelector = '.k-item:not(.k-state-disabled)', linkSelector = '.k-item:not(.k-state-disabled) > .k-link', exclusionSelector = ':not(.k-item.k-separator)', nextSelector = exclusionSelector + ':eq(0)', lastSelector = exclusionSelector + ':last', templateSelector = 'div:not(.k-animation-container,.k-list-container)', scrollButtonSelector = '.k-menu-scroll-button', touchPointerTypes = {
+        var kendo = window.kendo, ui = kendo.ui, activeElement = kendo._activeElement, touch = kendo.support.touch && kendo.support.mobileOS, MOUSEDOWN = 'mousedown', CLICK = 'click', DELAY = 30, SCROLLSPEED = 50, extend = $.extend, proxy = $.proxy, each = $.each, template = kendo.template, keys = kendo.keys, Widget = ui.Widget, excludedNodesRegExp = /^(ul|a|div)$/i, NS = '.kendoMenu', IMG = 'img', OPEN = 'open', MENU = 'k-menu', LINK = 'k-link', LAST = 'k-last', CLOSE = 'close', TIMER = 'timer', FIRST = 'k-first', IMAGE = 'k-image', SELECT = 'select', ZINDEX = 'zIndex', ACTIVATE = 'activate', DEACTIVATE = 'deactivate', POINTERDOWN = 'touchstart' + NS + ' MSPointerDown' + NS + ' pointerdown' + NS, pointers = kendo.support.pointers, msPointers = kendo.support.msPointers, allPointers = msPointers || pointers, MOUSEENTER = pointers ? 'pointerenter' : msPointers ? 'MSPointerEnter' : 'mouseenter', MOUSELEAVE = pointers ? 'pointerleave' : msPointers ? 'MSPointerLeave' : 'mouseleave', MOUSEWHEEL = 'DOMMouseScroll' + NS + ' mousewheel' + NS, RESIZE = kendo.support.resize + NS, SCROLLWIDTH = 'scrollWidth', SCROLLHEIGHT = 'scrollHeight', OFFSETWIDTH = 'offsetWidth', OFFSETHEIGHT = 'offsetHeight', POPUP_ID_ATTR = 'group', POPUP_OPENER_ATTR = 'groupparent', DOCUMENT_ELEMENT = $(document.documentElement), KENDOPOPUP = 'kendoPopup', DEFAULTSTATE = 'k-state-default', HOVERSTATE = 'k-state-hover', FOCUSEDSTATE = 'k-state-focused', DISABLEDSTATE = 'k-state-disabled', SELECTEDSTATE = 'k-state-selected', menuSelector = '.k-menu', groupSelector = '.k-menu-group', animationContainerSelector = '.k-animation-container', popupSelector = groupSelector + ',' + animationContainerSelector, allItemsSelector = ':not(.k-list) > .k-item', disabledSelector = '.k-item.k-state-disabled', itemSelector = '.k-item', availableItemsSelector = '.k-item:not(.k-state-disabled)', linkSelector = '.k-item:not(.k-state-disabled) > .k-link', exclusionSelector = ':not(.k-item.k-separator)', nextSelector = itemSelector + exclusionSelector + ':eq(0)', lastSelector = itemSelector + exclusionSelector + ':last', templateSelector = 'div:not(.k-animation-container,.k-list-container)', scrollButtonSelector = '.k-menu-scroll-button', touchPointerTypes = {
                 '2': 1,
                 'touch': 1
             }, templates = {
@@ -200,10 +200,10 @@
         }
         function updateArrow(item) {
             item = $(item);
-            item.find('> .k-link > [class*=k-i-arrow]:not(.k-sprite)').remove();
+            item.find('> .k-link > [class*=k-i-arrow-60]:not(.k-sprite)').remove();
             item.filter(':has(.k-menu-group)').children('.k-link:not(:has([class*=k-i-arrow]:not(.k-sprite)))').each(function () {
                 var item = $(this), arrowCssClass = getArrowCssClass(item);
-                item.append('<span class=\'k-icon ' + arrowCssClass + '\'/>');
+                item.append('<span class=\'k-icon' + arrowCssClass + ' k-menu-expand-arrow\'/>');
             });
         }
         function getArrowCssClass(item) {
@@ -225,6 +225,23 @@
             item.filter('.k-last:not(:last-child)').removeClass(LAST);
             item.filter(':first-child').addClass(FIRST);
             item.filter(':last-child').addClass(LAST);
+        }
+        function updateHasAriaPopup(parents) {
+            if (parents && parents.length) {
+                for (var index in parents) {
+                    var parentLi = parents.eq(index);
+                    if (parentLi.find('ul').length) {
+                        parentLi.attr('aria-haspopup', true);
+                    } else {
+                        parentLi.removeAttr('aria-haspopup');
+                    }
+                }
+            }
+        }
+        function getParentLiItems(group) {
+            if (!group.hasClass(MENU)) {
+                return group.parentsUntil('.' + MENU, 'li');
+            }
         }
         function storeItemSelectEventHandler(element, options) {
             var selectHandler = getItemSelectEventHandler(options);
@@ -323,7 +340,7 @@
             return scroll;
         }
         function isPointerTouch(e) {
-            return allPointers && e.originalEvent.pointerType in touchPointerTypes;
+            return allPointers && e.originalEvent && e.originalEvent.pointerType in touchPointerTypes;
         }
         function isTouch(e) {
             var ev = e.originalEvent;
@@ -340,8 +357,8 @@
                 Widget.fn.init.call(that, element, options);
                 element = that.wrapper = that.element;
                 options = that.options;
-                that._initData(options);
                 that._updateClasses();
+                that._initData(options);
                 that._animations(options);
                 that.nextItemZIndex = 100;
                 that._tabindex();
@@ -395,7 +412,7 @@
                 var element = that.element;
                 var options = that.options;
                 var overflowWrapper = that._overflowWrapper();
-                (overflowWrapper || element).on(POINTERDOWN, itemSelector, proxy(that._focusHandler, that)).on(CLICK + NS, disabledSelector, false).on(CLICK + NS, itemSelector, proxy(that._click, that)).on(POINTERDOWN + ' ' + MOUSEDOWN + NS, '.k-content', proxy(that._preventClose, that)).on(MOUSEENTER + NS, itemSelector, proxy(that._mouseenter, that)).on(MOUSELEAVE + NS, itemSelector, proxy(that._mouseleave, that)).on(MOUSEENTER + NS + ' ' + MOUSELEAVE + NS + ' ' + MOUSEDOWN + NS + ' ' + CLICK + NS, linkSelector, proxy(that._toggleHover, that));
+                (overflowWrapper || element).on(POINTERDOWN, itemSelector, proxy(that._focusHandler, that)).on(CLICK + NS, disabledSelector, false).on(CLICK + NS, itemSelector, proxy(that._click, that)).on(POINTERDOWN + ' ' + MOUSEDOWN + NS, '.k-content', proxy(that._preventClose, that)).on(MOUSEENTER + NS, availableItemsSelector, proxy(that._mouseenter, that)).on(MOUSELEAVE + NS, availableItemsSelector, proxy(that._mouseleave, that)).on(MOUSEDOWN + NS, availableItemsSelector, proxy(that._mousedown, that)).on(MOUSEENTER + NS + ' ' + MOUSELEAVE + NS + ' ' + MOUSEDOWN + NS + ' ' + CLICK + NS, linkSelector, proxy(that._toggleHover, that));
                 element.on('keydown' + NS, proxy(that._keydown, that)).on('focus' + NS, proxy(that._focus, that)).on('focus' + NS, '.k-content', proxy(that._focus, that)).on('blur' + NS, proxy(that._removeHoverItem, that)).on('blur' + NS, '[tabindex]', proxy(that._checkActiveElement, that));
                 if (overflowWrapper) {
                     overflowWrapper.on(MOUSELEAVE + NS, popupSelector, proxy(that._mouseleavePopup, that)).on(MOUSEENTER + NS, popupSelector, proxy(that._mouseenterPopup, that));
@@ -454,7 +471,7 @@
                 that._scrollWrapper.css({ width: wrapperCssWidth });
                 var menuWidth = that.element.outerWidth();
                 var borders = that.element[0].offsetWidth - that.element[0].clientWidth;
-                if (menuWidth != wrapperWidth) {
+                if (menuWidth != wrapperWidth && wrapperWidth > 0) {
                     var width = initialCssWidth ? Math.min(initialWidth, wrapperWidth) : wrapperWidth;
                     that.element.width(width - borders);
                     that._scrollWrapper.width(width);
@@ -597,6 +614,7 @@
                 });
                 updateArrow(referenceItem);
                 updateFirstLast(inserted.group.find('.k-first, .k-last').add(inserted.items));
+                updateHasAriaPopup(getParentLiItems(inserted.group));
                 return this;
             },
             insertBefore: function (item, referenceItem) {
@@ -670,12 +688,14 @@
                 var that = this, parent = element.parentsUntil(that.element, allItemsSelector), group = element.parent('ul:not(.k-menu)');
                 element.remove();
                 if (group && !group.children(allItemsSelector).length) {
+                    var parentItems = getParentLiItems(group);
                     var container = group.parent(animationContainerSelector);
                     if (container.length) {
                         container.remove();
                     } else {
                         group.remove();
                     }
+                    updateHasAriaPopup(parentItems);
                 }
                 if (parent.length) {
                     parent = parent.eq(0);
@@ -699,17 +719,8 @@
                         direction = horizontal ? (direction + ' right').replace('default', 'bottom') : 'right';
                     }
                 }
-                var visiblePopups = '>.k-popup:visible,>.k-animation-container>.k-popup:visible';
-                var closePopup = function () {
-                    var popup = $(this).data(KENDOPOPUP);
-                    if (popup) {
-                        popup.close(true);
-                    }
-                };
-                element.siblings().find(visiblePopups).each(closePopup);
-                if (overflowWrapper) {
-                    element.find(visiblePopups).each(closePopup);
-                    overflowWrapper.find('.' + FOCUSEDSTATE).removeClass(FOCUSEDSTATE);
+                if (that.options.openOnClick) {
+                    that.clicked = true;
                 }
                 element.each(function () {
                     var li = $(this);
@@ -815,6 +826,7 @@
                             }
                             ul.removeAttr('aria-hidden');
                             that._configurePopupOverflow(popup, li);
+                            popup._hovered = true;
                             popup.open();
                             that._initPopupScrolling(popup);
                         }
@@ -879,6 +891,9 @@
                 }, timeout);
             },
             _popupOpen: function (e) {
+                if (!this._keyTriggered) {
+                    e.sender.element.children('.' + FOCUSEDSTATE).removeClass(FOCUSEDSTATE);
+                }
                 if (this.options.scrollable) {
                     this._setPopupHeight(e.sender);
                 }
@@ -1004,7 +1019,7 @@
                 element.addClass('k-widget k-reset k-header k-menu-init ' + MENU).addClass(MENU + '-' + this.options.orientation);
                 element.find('li > ul').filter(function () {
                     return !kendo.support.matchesSelector.call(this, nonContentGroupsSelector);
-                }).addClass('k-group k-menu-group').attr('role', 'menu').attr('aria-hidden', element.is(':visible')).end().find('li > div').addClass('k-content').attr('tabindex', '-1');
+                }).addClass('k-group k-menu-group').attr('role', 'menu').attr('aria-hidden', element.is(':visible')).parent('li').attr('aria-haspopup', 'true').end().find('li > div').addClass('k-content').attr('tabindex', '-1');
                 items = element.find('> li,.k-menu-group > li');
                 element.removeClass('k-menu-init');
                 items.each(function () {
@@ -1023,12 +1038,25 @@
                 if (e.delegateTarget != element.parents(menuSelector)[0] && e.delegateTarget != element.parents('.k-menu-scroll-wrapper,.k-popups-wrapper')[0]) {
                     return;
                 }
-                if ((!that.options.openOnClick || that.clicked) && !touch && !(pointerTouch && that._isRootItem(element.closest(allItemsSelector)))) {
+                that._keyTriggered = false;
+                if (that.options.openOnClick.rootMenuItems && that._isRootItem(element.closest(allItemsSelector)) || that.options.openOnClick.subMenuItems && !that._isRootItem(element.closest(allItemsSelector))) {
+                    return;
+                }
+                if ((that.options.openOnClick === false || that.options.openOnClick.rootMenuItems === false && that._isRootItem(element.closest(allItemsSelector)) || that.options.openOnClick.subMenuItems === false && !that._isRootItem(element.closest(allItemsSelector)) || that.clicked) && !touch && !(pointerTouch && that._isRootItem(element.closest(allItemsSelector)))) {
                     if (!contains(e.currentTarget, e.relatedTarget) && hasChildren) {
                         that.open(element);
                     }
                 }
-                if (that.options.openOnClick && that.clicked || touch) {
+                if (that.options.openOnClick === true && that.clicked || touch) {
+                    element.siblings().each(proxy(function (_, sibling) {
+                        that.close(sibling, true);
+                    }, that));
+                }
+            },
+            _mousedown: function (e) {
+                var that = this;
+                var element = $(e.currentTarget);
+                if (that.options.openOnClick.subMenuItems && !that._isRootItem(element) || touch) {
                     element.siblings().each(proxy(function (_, sibling) {
                         that.close(sibling, true);
                     }, that));
@@ -1047,11 +1075,11 @@
                     e.stopImmediatePropagation();
                     return;
                 }
-                if (!that.options.openOnClick && !touch && !isPointerTouch(e) && !contains(e.currentTarget, e.relatedTarget || e.target) && hasChildren && !contains(e.currentTarget, kendo._activeElement())) {
-                    that.close(element);
+                if ((that.options.openOnClick === false || !that.options.openOnClick.rootMenuItems && that._isRootItem(element) || !that.options.openOnClick.subMenuItems && !that._isRootItem(element)) && !touch && !isPointerTouch(e) && !contains(e.currentTarget, e.relatedTarget || e.target) && hasChildren && !contains(e.currentTarget, kendo._activeElement())) {
+                    that.close(element, true);
                     return;
                 }
-                if (!e.toElement && !e.relatedTarget || e.clientX < 0 || e.clientY < 0 || e.clientY > $window.height() || e.clientX > $window.width()) {
+                if (kendo.support.browser.msie && !e.toElement && !e.relatedTarget || e.clientX < 0 || e.clientY < 0 || e.clientY > $window.height() || e.clientX > $window.width()) {
                     that.close(element);
                 }
             },
@@ -1164,7 +1192,7 @@
                 if (isLink && e.enterKey) {
                     link[0].click();
                 }
-                if ((!that._isRootItem(element) || !options.openOnClick) && !kendo.support.touch && !(allPointers && that._isRootItem(element.closest(allItemsSelector)))) {
+                if ((!that._isRootItem(element) || options.openOnClick === false) && !options.openOnClick.subMenuItems && !kendo.support.touch && !(isPointerTouch(e) && that._isRootItem(element.closest(allItemsSelector)))) {
                     return;
                 }
                 if (!isLink && !formNode && !isTargetLink) {
@@ -1197,6 +1225,7 @@
                 }
             },
             _triggerSelect: function (target, itemElement) {
+                target = target.is('.k-link') ? target : target.closest('.k-link');
                 var selectHandler = target.data('selectHandler'), itemSelectEventData;
                 if (selectHandler) {
                     itemSelectEventData = this._getEventData(target);
@@ -1256,6 +1285,7 @@
                 }
                 belongsToVertical = that._itemBelongsToVertival(hoverItem);
                 hasChildren = that._itemHasChildren(hoverItem);
+                that._keyTriggered = true;
                 if (key == keys.RIGHT) {
                     target = that[isRtl ? '_itemLeft' : '_itemRight'](hoverItem, belongsToVertical, hasChildren);
                 } else if (key == keys.LEFT) {
@@ -1264,6 +1294,12 @@
                     target = that._itemDown(hoverItem, belongsToVertical, hasChildren);
                 } else if (key == keys.UP) {
                     target = that._itemUp(hoverItem, belongsToVertical, hasChildren);
+                } else if (key == keys.HOME) {
+                    that._moveHover(hoverItem, hoverItem.parent().children().first());
+                    e.preventDefault();
+                } else if (key == keys.END) {
+                    that._moveHover(hoverItem, hoverItem.parent().children().last());
+                    e.preventDefault();
                 } else if (key == keys.ESC) {
                     target = that._itemEsc(hoverItem, belongsToVertical);
                 } else if (key == keys.ENTER || key == keys.SPACEBAR) {
@@ -1275,7 +1311,12 @@
                             },
                             enterKey: true
                         });
-                        that._moveHover(hoverItem, that._findRootParent(hoverItem));
+                        if (hasChildren && !hoverItem.hasClass(DISABLEDSTATE)) {
+                            that.open(hoverItem);
+                            that._moveHover(hoverItem, that._childPopupElement(hoverItem).children().first());
+                        } else {
+                            that._moveHover(hoverItem, that._findRootParent(hoverItem));
+                        }
                     }
                 } else if (key == keys.TAB) {
                     target = that._findRootParent(hoverItem);
@@ -1336,15 +1377,13 @@
             },
             _itemRight: function (item, belongsToVertical, hasChildren) {
                 var that = this, nextItem, parentItem, overflowWrapper;
-                if (item.hasClass(DISABLEDSTATE)) {
-                    return;
-                }
                 if (!belongsToVertical) {
                     nextItem = item.nextAll(nextSelector);
                     if (!nextItem.length) {
                         nextItem = item.prevAll(lastSelector);
                     }
-                } else if (hasChildren) {
+                    that.close(item);
+                } else if (hasChildren && !item.hasClass(DISABLEDSTATE)) {
                     that.open(item);
                     nextItem = that._childPopupElement(item).children().first();
                 } else if (that.options.orientation == 'horizontal') {
@@ -1372,6 +1411,7 @@
                     if (!nextItem.length) {
                         nextItem = item.nextAll(lastSelector);
                     }
+                    that.close(item);
                 } else {
                     nextItem = item.parent().closest('.k-item');
                     overflowWrapper = that._overflowWrapper();

@@ -1,17 +1,17 @@
 /** 
- * Kendo UI v2017.2.504 (http://www.telerik.com/kendo-ui)                                                                                                                                               
- * Copyright 2017 Telerik AD. All rights reserved.                                                                                                                                                      
+ * Copyright 2017 Telerik AD                                                                                                                                                                            
  *                                                                                                                                                                                                      
- * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
- * http://www.telerik.com/purchase/license-agreement/kendo-ui-complete                                                                                                                                  
- * If you do not own a commercial license, this file shall be governed by the trial license terms.                                                                                                      
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
                                                                                                                                                                                                        
                                                                                                                                                                                                        
                                                                                                                                                                                                        
@@ -33,7 +33,7 @@
         advanced: true
     };
     (function ($, undefined) {
-        var kendo = window.kendo, ui = kendo.ui, Widget = ui.Widget, proxy = $.proxy, FIRST = '.k-i-seek-w', LAST = '.k-i-seek-e', PREV = '.k-i-arrow-w', NEXT = '.k-i-arrow-e', CHANGE = 'change', NS = '.kendoPager', CLICK = 'click', KEYDOWN = 'keydown', DISABLED = 'disabled', iconTemplate = kendo.template('<a href="\\#" aria-label="#=text#" title="#=text#" class="k-link k-pager-nav #= wrapClassName #"><span class="k-icon #= className #"></span></a>');
+        var kendo = window.kendo, ui = kendo.ui, Widget = ui.Widget, proxy = $.proxy, FIRST = '.k-i-seek-w', LAST = '.k-i-seek-e', PREV = '.k-i-arrow-w', NEXT = '.k-i-arrow-e', CHANGE = 'change', NS = '.kendoPager', CLICK = 'click', KEYDOWN = 'keydown', DISABLED = 'disabled', MOUSEDOWN = 'down', DOCUMENT_ELEMENT = $(document.documentElement), iconTemplate = kendo.template('<a href="\\#" aria-label="#=text#" title="#=text#" class="k-link k-pager-nav #= wrapClassName #"><span class="k-icon #= className #"></span></a>');
         function button(template, idx, text, numeric, title) {
             return template({
                 idx: idx,
@@ -78,6 +78,7 @@
                 totalPages = that.totalPages();
                 that._refreshHandler = proxy(that.refresh, that);
                 that.dataSource.bind(CHANGE, that._refreshHandler);
+                that.downEvent = kendo.applyEventMap(MOUSEDOWN, kendo.guid());
                 if (options.previousNext) {
                     if (!that.element.find(FIRST).length) {
                         that.element.append(icon(FIRST, options.messages.first, 'k-pager-first'));
@@ -199,6 +200,7 @@
             },
             refresh: function (e) {
                 var that = this, idx, end, start = 1, reminder, page = that.page(), html = '', options = that.options, pageSize = that.pageSize(), total = that.dataSource.total(), totalPages = that.totalPages(), linkTemplate = that.linkTemplate, buttonCount = options.buttonCount;
+                DOCUMENT_ELEMENT.unbind(that.downEvent, $.proxy(that._hideList, that));
                 if (e && e.action == 'itemchange') {
                     return;
                 }
@@ -225,7 +227,7 @@
                 }
                 if (options.info) {
                     if (total > 0) {
-                        html = kendo.format(options.messages.display, Math.min((page - 1) * pageSize + 1, total), Math.min(page * pageSize, total), total);
+                        html = kendo.format(options.messages.display, that.dataSource.options.endless ? 1 : Math.min((page - 1) * pageSize + 1, total), Math.min(page * pageSize, total), total);
                     } else {
                         html = options.messages.empty;
                     }
@@ -276,7 +278,20 @@
                 }
             },
             _toggleActive: function () {
-                this.list.toggleClass('k-state-expanded');
+                var that = this;
+                if (that.list.hasClass('k-state-expanded')) {
+                    DOCUMENT_ELEMENT.unbind(that.downEvent, $.proxy(that._hideList, that));
+                } else {
+                    DOCUMENT_ELEMENT.bind(that.downEvent, $.proxy(that._hideList, that));
+                }
+                that.list.toggleClass('k-state-expanded');
+            },
+            _hideList: function (e) {
+                var that = this, target = kendo.eventTarget(e);
+                if (!$.contains(that.list[0], target)) {
+                    DOCUMENT_ELEMENT.unbind(that.downEvent, $.proxy(that._hideList, that));
+                    that.list.removeClass('k-state-expanded');
+                }
             },
             _click: function (e) {
                 var target = $(e.currentTarget);

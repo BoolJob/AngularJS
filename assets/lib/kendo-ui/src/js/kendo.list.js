@@ -1,17 +1,17 @@
 /** 
- * Kendo UI v2017.2.504 (http://www.telerik.com/kendo-ui)                                                                                                                                               
- * Copyright 2017 Telerik AD. All rights reserved.                                                                                                                                                      
+ * Copyright 2017 Telerik AD                                                                                                                                                                            
  *                                                                                                                                                                                                      
- * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
- * http://www.telerik.com/purchase/license-agreement/kendo-ui-complete                                                                                                                                  
- * If you do not own a commercial license, this file shall be governed by the trial license terms.                                                                                                      
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
                                                                                                                                                                                                        
                                                                                                                                                                                                        
                                                                                                                                                                                                        
@@ -350,6 +350,17 @@
                 that._open = options.open;
                 that._filterSource(expression);
             },
+            _clearButton: function () {
+                if (!this._clear) {
+                    this._clear = $('<span unselectable="on" class="k-icon k-clear-value k-i-close" title="clear"></span>').attr({
+                        'role': 'button',
+                        'tabIndex': -1
+                    });
+                }
+                if (!this.options.clearButton) {
+                    this._clear.remove();
+                }
+            },
             search: function (word) {
                 var options = this.options;
                 word = typeof word === 'string' ? word : this._inputValue();
@@ -437,7 +448,7 @@
                 var focusedElm = that._focused;
                 var inputElm = that.element;
                 var inputId = inputElm.attr('id');
-                var labelElm = $('label[for=\'' + inputId + '\']');
+                var labelElm = $('label[for="' + inputId + '"]');
                 var ariaLabel = inputElm.attr('aria-label');
                 var ariaLabelledBy = inputElm.attr('aria-labelledby');
                 if (focusedElm === inputElm) {
@@ -512,7 +523,7 @@
                 var siblings = this.listView.content.prevAll(':visible');
                 siblings.each(function () {
                     var element = $(this);
-                    offsetHeight += outerHeight(element);
+                    offsetHeight += outerHeight(element, true);
                 });
                 return offsetHeight;
             },
@@ -633,7 +644,8 @@
                     open: proxy(that._openHandler, that),
                     close: proxy(that._closeHandler, that),
                     animation: that.options.animation,
-                    isRtl: support.isRtl(that.wrapper)
+                    isRtl: support.isRtl(that.wrapper),
+                    autosize: that.options.autoWidth
                 }));
             },
             _makeUnselectable: function () {
@@ -718,6 +730,7 @@
                 that._dataSource();
                 if (that.listView.bound()) {
                     that._initialIndex = null;
+                    that.listView._current = null;
                 }
                 that.listView.setDataSource(that.dataSource);
                 if (that.options.autoBind) {
@@ -797,8 +810,11 @@
                 that._busy = null;
                 that._showClear();
             },
-            _showBusy: function () {
+            _showBusy: function (e) {
                 var that = this;
+                if (e.isDefaultPrevented()) {
+                    return;
+                }
                 that._request = true;
                 if (that._busy) {
                     return;
@@ -900,6 +916,7 @@
                             if (!that.popup.visible()) {
                                 that._blur();
                             }
+                            that._oldIndex = that.selectedIndex;
                         });
                     }
                     e.preventDefault();
@@ -1044,7 +1061,7 @@
                     options.autoBind = false;
                     parent.bind('set', function () {
                         that.one('set', function (e) {
-                            that._selectedValue = e.value;
+                            that._selectedValue = e.value || that._accessor();
                         });
                     });
                     parent.first(CASCADE, that._cascadeHandlerProxy);
@@ -1156,6 +1173,9 @@
                 }).on('mouseleave' + STATIC_LIST_NS, 'li', function () {
                     $(this).removeClass(HOVER);
                 });
+                if (this.options.selectable === 'multiple') {
+                    this.element.attr('aria-multiselectable', true);
+                }
                 this.content = this.element.wrap('<div class=\'k-list-scroller\' unselectable=\'on\'></div>').parent();
                 this.header = this.content.before('<div class="k-group-header" style="display:none"></div>').prev();
                 this.bound(false);
@@ -1310,7 +1330,7 @@
                 candidate = last(that._get(candidate));
                 candidate = $(this.element[0].children[candidate]);
                 if (that._current) {
-                    that._current.removeClass(FOCUSED).removeAttr('aria-selected').removeAttr(ID);
+                    that._current.removeClass(FOCUSED).removeAttr(ID);
                     that.trigger('deactivate');
                 }
                 hasCandidate = !!candidate[0];
@@ -1460,7 +1480,7 @@
                 indices = indices.slice();
                 if (selectable === true || !indices.length) {
                     for (; i < selectedIndices.length; i++) {
-                        $(children[selectedIndices[i]]).removeClass('k-state-selected');
+                        $(children[selectedIndices[i]]).removeClass('k-state-selected').attr('aria-selected', false);
                         removed.push({
                             position: i,
                             dataItem: dataItems[i]
@@ -1478,7 +1498,7 @@
                         for (j = 0; j < selectedIndices.length; j++) {
                             selectedIndex = selectedIndices[j];
                             if (selectedIndex === index) {
-                                $(children[selectedIndex]).removeClass('k-state-selected');
+                                $(children[selectedIndex]).removeClass('k-state-selected').attr('aria-selected', false);
                                 removed.push({
                                     position: j + removedIndices,
                                     dataItem: dataItems.splice(j, 1)[0]
@@ -1668,7 +1688,7 @@
                 if (selected) {
                     item += ' k-state-selected';
                 }
-                item += '"' + (selected ? ' aria-selected="true"' : '') + ' data-offset-index="' + context.index + '">';
+                item += '" aria-selected="' + (selected ? 'true' : 'false') + '" data-offset-index="' + context.index + '">';
                 item += this.templates.template(dataItem);
                 if (notFirstItem && context.newGroup) {
                     item += '<div class="k-group">' + this.templates.groupTemplate(context.group) + '</div>';

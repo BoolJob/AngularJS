@@ -1,17 +1,17 @@
 /** 
- * Kendo UI v2017.2.504 (http://www.telerik.com/kendo-ui)                                                                                                                                               
- * Copyright 2017 Telerik AD. All rights reserved.                                                                                                                                                      
+ * Copyright 2017 Telerik AD                                                                                                                                                                            
  *                                                                                                                                                                                                      
- * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
- * http://www.telerik.com/purchase/license-agreement/kendo-ui-complete                                                                                                                                  
- * If you do not own a commercial license, this file shall be governed by the trial license terms.                                                                                                      
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
                                                                                                                                                                                                        
                                                                                                                                                                                                        
                                                                                                                                                                                                        
@@ -133,6 +133,9 @@
             if (!data.item) {
                 itemTemplate = templates.placeholderTemplate;
             }
+            if (data.index === 0 && this.header && data.group) {
+                this.header.html(templates.fixedGroupTemplate(data.group));
+            }
             this.angular('cleanup', function () {
                 return { elements: [element] };
             });
@@ -242,7 +245,7 @@
                 template: '#:data#',
                 placeholderTemplate: 'loading...',
                 groupTemplate: '#:data#',
-                fixedGroupTemplate: 'fixed header template',
+                fixedGroupTemplate: '#:data#',
                 mapValueTo: 'index',
                 valueMapper: null
             },
@@ -467,7 +470,9 @@
                     this._selectedDataItems = dataItems;
                     this._selectedIndexes = [];
                     for (var i = 0; i < this._selectedDataItems.length; i++) {
-                        this._selectedIndexes.push(undefined);
+                        var item = this._getElementByDataItem(this._selectedDataItems[i]);
+                        this._selectedIndexes.push(this._getIndecies(item)[0]);
+                        item.addClass(SELECTED);
                     }
                     this._triggerChange(removed, added);
                     if (this._valueDeferred) {
@@ -759,7 +764,7 @@
             _getElementByDataItem: function (dataItem) {
                 var dataView = this._dataView, valueGetter = this._valueGetter, element, match;
                 for (var i = 0; i < dataView.length; i++) {
-                    match = dataView[i].item && isPrimitive(dataView[i].item) ? dataView[i].item === dataItem : valueGetter(dataView[i].item) === valueGetter(dataItem);
+                    match = dataView[i].item && isPrimitive(dataView[i].item) ? dataView[i].item === dataItem : dataView[i].item && dataItem && valueGetter(dataView[i].item) == valueGetter(dataItem);
                     if (match) {
                         element = dataView[i];
                         break;
@@ -955,7 +960,8 @@
                 if (firstVisibleDataItem && firstVisibleDataItem.item) {
                     var firstVisibleGroup = firstVisibleDataItem.group;
                     if (firstVisibleGroup !== group) {
-                        this.header[0].innerHTML = firstVisibleGroup || '';
+                        var fixedGroupText = firstVisibleGroup || '';
+                        this.header.html(this.templates.fixedGroupTemplate(fixedGroupText));
                         this.currentVisibleGroup = firstVisibleGroup;
                     }
                 }
@@ -1109,10 +1115,10 @@
                 indices = indices.slice();
                 if (selectable === true || !indices.length) {
                     for (var idx = 0; idx < selectedIndexes.length; idx++) {
-                        if (selectedIndexes[idx] !== undefined) {
-                            this._getElementByIndex(selectedIndexes[idx]).removeClass(SELECTED);
-                        } else if (selectedDataItems[idx]) {
+                        if (selectedDataItems[idx]) {
                             this._getElementByDataItem(selectedDataItems[idx]).removeClass(SELECTED);
+                        } else if (selectedIndexes[idx] !== undefined) {
+                            this._getElementByIndex(selectedIndexes[idx]).removeClass(SELECTED);
                         }
                         removed.push({
                             index: selectedIndexes[idx],

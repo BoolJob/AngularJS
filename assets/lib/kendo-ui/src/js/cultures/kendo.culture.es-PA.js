@@ -1,17 +1,17 @@
 /** 
- * Kendo UI v2017.2.504 (http://www.telerik.com/kendo-ui)                                                                                                                                               
- * Copyright 2017 Telerik AD. All rights reserved.                                                                                                                                                      
+ * Copyright 2017 Telerik AD                                                                                                                                                                            
  *                                                                                                                                                                                                      
- * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
- * http://www.telerik.com/purchase/license-agreement/kendo-ui-complete                                                                                                                                  
- * If you do not own a commercial license, this file shall be governed by the trial license terms.                                                                                                      
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
                                                                                                                                                                                                        
                                                                                                                                                                                                        
                                                                                                                                                                                                        
@@ -40,7 +40,7 @@
             ".": ".",
             groupSize: [3],
             percent: {
-                pattern: ["-n%","n%"],
+                pattern: ["-n %","n %"],
                 decimals: 2,
                 ",": ",",
                 ".": ".",
@@ -50,7 +50,7 @@
             currency: {
                 name: "Panamanian Balboa",
                 abbr: "PAB",
-                pattern: ["($ n)","$ n"],
+                pattern: ["-$n","$n"],
                 decimals: 2,
                 ",": ",",
                 ".": ".",
@@ -63,28 +63,28 @@
                 days: {
                     names: ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"],
                     namesAbbr: ["dom.","lun.","mar.","mié.","jue.","vie.","sáb."],
-                    namesShort: ["do.","lu.","ma.","mi.","ju.","vi.","sá."]
+                    namesShort: ["DO","LU","MA","MI","JU","VI","SA"]
                 },
                 months: {
                     names: ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"],
                     namesAbbr: ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic."]
                 },
-                AM: ["a. m.","a. m.","A. M."],
-                PM: ["p. m.","p. m.","P. M."],
+                AM: ["a.m.","a.m.","A.M."],
+                PM: ["p.m.","p.m.","P.M."],
                 patterns: {
-                    d: "d/M/yy",
-                    D: "dddd, dd' de 'MMMM' de 'yyyy",
-                    F: "dddd, dd' de 'MMMM' de 'yyyy h:mm:ss tt",
-                    g: "d/M/yy h:mm tt",
-                    G: "d/M/yy h:mm:ss tt",
-                    m: "d' de 'MMMM",
-                    M: "d' de 'MMMM",
+                    d: "MM/dd/yyyy",
+                    D: "dddd, d 'de' MMMM 'de' yyyy",
+                    F: "dddd, d 'de' MMMM 'de' yyyy h:mm:ss tt",
+                    g: "MM/dd/yyyy h:mm tt",
+                    G: "MM/dd/yyyy h:mm:ss tt",
+                    m: "d 'de' MMMM",
+                    M: "d 'de' MMMM",
                     s: "yyyy'-'MM'-'dd'T'HH':'mm':'ss",
                     t: "h:mm tt",
                     T: "h:mm:ss tt",
                     u: "yyyy'-'MM'-'dd HH':'mm':'ss'Z'",
-                    y: "MMMM' de 'yyyy",
-                    Y: "MMMM' de 'yyyy"
+                    y: "MMMM 'de' yyyy",
+                    Y: "MMMM 'de' yyyy"
                 },
                 "/": "/",
                 ":": ":",

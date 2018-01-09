@@ -1,17 +1,17 @@
 /** 
- * Kendo UI v2017.2.504 (http://www.telerik.com/kendo-ui)                                                                                                                                               
- * Copyright 2017 Telerik AD. All rights reserved.                                                                                                                                                      
+ * Copyright 2017 Telerik AD                                                                                                                                                                            
  *                                                                                                                                                                                                      
- * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
- * http://www.telerik.com/purchase/license-agreement/kendo-ui-complete                                                                                                                                  
- * If you do not own a commercial license, this file shall be governed by the trial license terms.                                                                                                      
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
                                                                                                                                                                                                        
                                                                                                                                                                                                        
                                                                                                                                                                                                        
@@ -85,7 +85,7 @@
                 },
                 arrowClass: function (item) {
                     var result = 'k-icon';
-                    result += item.expanded ? ' k-panelbar-collapse k-i-arrow-n' : ' k-panelbar-expand k-i-arrow-s';
+                    result += item.expanded ? ' k-panelbar-collapse k-i-arrow-60-up' : ' k-panelbar-expand k-i-arrow-60-down';
                     return result;
                 },
                 text: function (item) {
@@ -93,6 +93,9 @@
                 },
                 groupAttributes: function (group) {
                     return group.expanded !== true ? ' style=\'display:none\'' : '';
+                },
+                ariaHidden: function (group) {
+                    return group.expanded !== true;
                 },
                 groupCssClass: function () {
                     return 'k-group k-panel';
@@ -249,7 +252,7 @@
                 }
                 that.templates = {
                     content: template('<div role=\'region\' class=\'k-content\'#= contentAttributes(data) #>#= content(item) #</div>'),
-                    group: template('<ul role=\'group\' aria-hidden=\'true\' class=\'#= groupCssClass(group) #\'#= groupAttributes(group) #>' + '#= renderItems(data) #' + '</ul>'),
+                    group: template('<ul role=\'group\' aria-hidden=\'#= ariaHidden(group) #\' class=\'#= groupCssClass(group) #\'#= groupAttributes(group) #>' + '#= renderItems(data) #' + '</ul>'),
                     itemWrapper: template('# var url = ' + fieldAccessor('url') + '(item); #' + '# var imageUrl = ' + fieldAccessor('imageUrl') + '(item); #' + '# var spriteCssClass = ' + fieldAccessor('spriteCssClass') + '(item); #' + '# var contentUrl = contentUrl(item); #' + '# var tag = url||contentUrl ? \'a\' : \'span\'; #' + '<#= tag # class=\'#= textClass(item, group) #\' #= contentUrl ##= textAttributes(url) #>' + '# if (imageUrl) { #' + '<img class=\'k-image\' alt=\'\' src=\'#= imageUrl #\' />' + '# } #' + '# if (spriteCssClass) { #' + '<span class=\'k-sprite #= spriteCssClass #\'></span>' + '# } #' + '#= data.panelBar.options.template(data) #' + '#= arrow(data) #' + '</#= tag #>'),
                     item: template('<li role=\'menuitem\' #=aria(item)#class=\'#= wrapperCssClass(group, item) #\'' + kendo.attr('uid') + '=\'#= item.uid #\'>' + '#= itemWrapper(data) #' + '# if (item.items && item.items.length > 0) { #' + '#= subGroup({ items: item.items, panelBar: panelBar, group: { expanded: item.expanded } }) #' + '# } else if (item.content || item.contentUrl) { #' + '#= renderContent(data) #' + '# } #' + '</li>'),
                     loading: template('<div class=\'k-item\'><span class=\'k-icon k-i-loading\'></span> #: data.messages.loading #</div>'),
@@ -355,7 +358,7 @@
                     return dataItem.hasChildren || dataItem.content || dataItem.contentUrl;
                 }).children('.k-link:not(:has([class*=k-i-arrow]))').each(function () {
                     var item = $(this), parent = item.parent();
-                    item.append('<span class=\'k-icon ' + (parent.hasClass(ACTIVECLASS) ? ' k-panelbar-collapse k-i-arrow-n' : ' k-panelbar-expand k-i-arrow-s') + '\'/>');
+                    item.append('<span class=\'k-icon ' + (parent.hasClass(ACTIVECLASS) ? ' k-panelbar-collapse k-i-arrow-60-up' : ' k-panelbar-expand k-i-arrow-60-down') + '\'/>');
                 });
             },
             _accessors: function () {
@@ -898,8 +901,10 @@
                         var dataItem = that.dataItem(referenceItem);
                         if (dataItem) {
                             dataItem.hasChildren = true;
+                            referenceItem.attr(ARIA_EXPANDED, dataItem.expanded).not('.' + ACTIVECLASS).children('ul').attr(ARIA_HIDDEN, !dataItem.expanded);
+                        } else {
+                            referenceItem.attr(ARIA_EXPANDED, false);
                         }
-                        referenceItem.attr(ARIA_EXPANDED, false);
                     }
                 } else {
                     if (typeof item == 'string' && item.charAt(0) != '<') {
@@ -925,11 +930,14 @@
                 }
             },
             _updateClasses: function () {
-                var that = this, panels, items;
+                var that = this, panels, items, expanded, panelsParent, dataItem;
                 panels = that.element.find('li > ul').not(function () {
                     return $(this).parentsUntil('.k-panelbar', 'div').length;
                 }).addClass('k-group k-panel').attr('role', 'group');
-                panels.parent().attr(ARIA_EXPANDED, false).not('.' + ACTIVECLASS).children('ul').attr(ARIA_HIDDEN, true).hide();
+                panelsParent = panels.parent();
+                dataItem = that.dataItem(panelsParent);
+                expanded = dataItem && dataItem.expanded || false;
+                panels.parent().attr(ARIA_EXPANDED, expanded).not('.' + ACTIVECLASS).children('ul').attr(ARIA_HIDDEN, !expanded).hide();
                 items = that.element.add(panels).children();
                 that._updateItemsClasses(items);
                 that.updateArrow(items);
@@ -1022,10 +1030,10 @@
                 return item.items && item.items.length > 0 || item.hasChildren;
             },
             _toggleItem: function (element, isVisible, expanded) {
-                var that = this, childGroup = element.find(GROUPS), link = element.find(LINKSELECTOR), url = link.attr(HREF), prevent, content, dataItem = that.dataItem(element);
+                var that = this, childGroup = element.find(GROUPS), link = element.find(LINKSELECTOR), url = link.attr(HREF), prevent, content, dataItem = that.dataItem(element), notVisible = !isVisible;
                 var loaded = dataItem && dataItem.loaded();
-                if (dataItem && !expanded) {
-                    dataItem.set('expanded', !isVisible);
+                if (dataItem && !expanded && dataItem.expanded !== notVisible) {
+                    dataItem.set('expanded', notVisible);
                     prevent = dataItem.hasChildren || !!dataItem.content || !!dataItem.contentUrl;
                     return prevent;
                 }
@@ -1063,7 +1071,8 @@
                     that._animating = false;
                     return;
                 }
-                element.parent().attr(ARIA_EXPANDED, !visibility).attr(ARIA_HIDDEN, visibility).toggleClass(ACTIVECLASS, !visibility).find('> .k-link > .k-panelbar-collapse,> .k-link > .k-panelbar-expand').toggleClass('k-i-arrow-n', !visibility).toggleClass('k-panelbar-collapse', !visibility).toggleClass('k-i-arrow-s', visibility).toggleClass('k-panelbar-expand', visibility);
+                element.attr(ARIA_HIDDEN, !!visibility);
+                element.parent().attr(ARIA_EXPANDED, !visibility).toggleClass(ACTIVECLASS, !visibility).find('> .k-link > .k-panelbar-collapse,> .k-link > .k-panelbar-expand').toggleClass('k-i-arrow-60-up', !visibility).toggleClass('k-panelbar-collapse', !visibility).toggleClass('k-i-arrow-60-down', visibility).toggleClass('k-panelbar-expand', visibility);
                 if (visibility) {
                     animation = extend(collapse, { hide: true });
                     animation.complete = function () {

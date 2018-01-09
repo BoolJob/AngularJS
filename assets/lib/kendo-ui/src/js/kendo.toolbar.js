@@ -1,17 +1,17 @@
 /** 
- * Kendo UI v2017.2.504 (http://www.telerik.com/kendo-ui)                                                                                                                                               
- * Copyright 2017 Telerik AD. All rights reserved.                                                                                                                                                      
+ * Copyright 2017 Telerik AD                                                                                                                                                                            
  *                                                                                                                                                                                                      
- * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
- * http://www.telerik.com/purchase/license-agreement/kendo-ui-complete                                                                                                                                  
- * If you do not own a commercial license, this file shall be governed by the trial license terms.                                                                                                      
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
                                                                                                                                                                                                        
                                                                                                                                                                                                        
                                                                                                                                                                                                        
@@ -398,6 +398,10 @@
                         findFocusableSibling(li, 'prev').focus();
                     } else if (e.keyCode === keys.SPACEBAR || e.keyCode === keys.ENTER) {
                         that.toolbar.userEvents.trigger('tap', { target: $(e.target) });
+                    } else if (e.keyCode === keys.HOME) {
+                        li.parent().find(':kendoFocusable').first().focus();
+                    } else if (e.keyCode === keys.END) {
+                        li.parent().find(':kendoFocusable').last().focus();
                     }
                 });
             },
@@ -960,6 +964,11 @@
                         findFocusableSibling(element, 'prev').focus();
                     } else if (e.keyCode === keys.SPACEBAR || e.keyCode === keys.ENTER) {
                         that.userEvents.trigger('tap', { target: $(e.target) });
+                        that.overflowAnchor.focus();
+                    } else if (e.keyCode === keys.HOME) {
+                        li.parent().find(':kendoFocusable').first().focus();
+                    } else if (e.keyCode === keys.END) {
+                        li.parent().find(':kendoFocusable').last().focus();
                     }
                 });
                 if (that.isMobile) {
@@ -1061,7 +1070,7 @@
                 }).on('keydown', proxy(that._keydown, that));
             },
             _keydown: function (e) {
-                var target = $(e.target), keyCode = e.keyCode, items = this.element.children(':not(.k-separator):visible');
+                var target = $(e.target), keyCode = e.keyCode, items = this.element.children(':not(.k-separator):visible'), direction = this._isRtl ? -1 : 1;
                 if (keyCode === keys.TAB) {
                     var element = target.parentsUntil(this.element).last(), lastHasFocus = false, firstHasFocus = false;
                     if (!element.length) {
@@ -1103,6 +1112,7 @@
                             prevFocusable.focus();
                         }
                     }
+                    this._preventNextFocus = false;
                 }
                 if (e.altKey && keyCode === keys.DOWN) {
                     var splitButton = $(document.activeElement).data('splitButton');
@@ -1122,6 +1132,68 @@
                     this.userEvents.trigger('tap', { target: target });
                     return;
                 }
+                if (keyCode === keys.HOME) {
+                    if (target.is('.k-dropdown')) {
+                        return;
+                    }
+                    if (this.overflowAnchor) {
+                        items.eq(1).focus();
+                    } else {
+                        items.first().focus();
+                    }
+                    e.preventDefault();
+                } else if (keyCode === keys.END) {
+                    if (target.is('.k-dropdown')) {
+                        return;
+                    }
+                    if (this.overflowAnchor && $(this.overflowAnchor).css('visibility') != 'hidden') {
+                        this.overflowAnchor.focus();
+                    } else {
+                        items.last().focus();
+                    }
+                    e.preventDefault();
+                } else if (keyCode === keys.RIGHT && !this._preventNextFocus && !target.is('input, select, .k-dropdown, .k-colorpicker') && this._getNextElement(e.target, 1 * direction)) {
+                    this._getNextElement(e.target, 1 * direction).focus();
+                    e.preventDefault();
+                } else if (keyCode === keys.LEFT && !this._preventNextFocus && !target.is('input, select, .k-dropdown, .k-colorpicker') && this._getNextElement(e.target, -1 * direction)) {
+                    this._getNextElement(e.target, -1 * direction).focus();
+                    e.preventDefault();
+                }
+            },
+            _getNextElement: function (item, direction) {
+                var items = this.element.children(':not(.k-separator):visible');
+                var itemIndex = items.index(item) === -1 ? items.index(item.parentElement) : items.index(item);
+                var startIndex = this.overflowAnchor ? 1 : 0;
+                var directionNumber = direction;
+                var searchIndex = direction === 1 ? items.length - 1 : startIndex;
+                var index = direction === 1 ? startIndex : items.length - 1;
+                var focusableItem = items[itemIndex + direction];
+                this._preventNextFocus = false;
+                if ($(item).closest('.' + BUTTON_GROUP).length && !$(item).is(direction === 1 ? ':last-child' : ':first-child')) {
+                    return $(item).closest('.' + BUTTON_GROUP).children()[$(item).closest('.' + BUTTON_GROUP).children().index(item) + direction];
+                }
+                if (this.overflowAnchor && item === this.overflowAnchor[0] && direction === -1) {
+                    focusableItem = items[items.length - 1];
+                }
+                if (itemIndex === searchIndex) {
+                    focusableItem = !this.overflowAnchor || this.overflowAnchor && $(this.overflowAnchor).css('visibility') === 'hidden' ? items[index] : this.overflowAnchor;
+                }
+                while (!$(focusableItem).is(':kendoFocusable')) {
+                    if (direction === -1 && $(focusableItem).closest('.' + BUTTON_GROUP).length) {
+                        focusableItem = $(focusableItem).children(':not(label, div)').last();
+                    } else {
+                        focusableItem = $(focusableItem).children(':not(label, div)').first();
+                    }
+                    if (!focusableItem.length) {
+                        directionNumber = directionNumber + direction;
+                        focusableItem = items[itemIndex + directionNumber];
+                        if (!focusableItem) {
+                            return this.overflowAnchor;
+                        }
+                    }
+                    this._preventNextFocus = $(focusableItem).closest('.' + BUTTON_GROUP).length ? false : true;
+                }
+                return focusableItem;
             },
             _getPrevFocusable: function (element) {
                 if (element.is('html')) {

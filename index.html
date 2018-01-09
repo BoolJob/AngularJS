@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="es-CL">
 <head>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width">
-
-    <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <!-- Script jquery -->
     <script type="text/javascript" src="assets/lib/jquery/dist/jquery.js"></script>
@@ -26,19 +25,29 @@
     <script type="text/javascript" src="assets/lib/ngModal/ng-modal.min.js"></script>
 
     <!--  Kendo Libs -->
-    <script type="text/javascript" src="assets/lib/kendo-ui/js/kendo.all.min.js"></script>
+    <script type="text/javascript" src="assets/lib/kendo-ui/js/kendo.core.min.js"></script>
     <script type="text/javascript" src="assets/lib/kendo-ui/js/messages/kendo.messages.es-CL.min.js"></script>
     <script type="text/javascript" src="assets/lib/kendo-ui/js/cultures/kendo.culture.es-CL.min.js"></script>
 
-    <!-- Script Bolsa -->
+    <!-- Script BoolJob -->
 	<script type="text/javascript" src="app/lb-services.js"></script>
     <script type="text/javascript" src="app/app.js"></script>
 
     <script type="text/javascript" src="shared/mainCTRL.js"></script>
     <script type="text/javascript" src="shared/rootCTRL.js"></script>
 
-	<!-- Solution Scripts -->
+    <!-- Solution Scripts -->
+    
+
     <script type="text/javascript" src="app/registro/registro.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+
+    <!--<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>-->
+    <link rel="stylesheet prefetch" href="assets/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css'>
+    <link rel="stylesheet" href="css/style.css">
+        
 </head>
 
 <body ng-app="app" ng-controller="rootCTRL" ng-cloak>

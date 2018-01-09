@@ -1,17 +1,17 @@
 /** 
- * Kendo UI v2017.2.504 (http://www.telerik.com/kendo-ui)                                                                                                                                               
- * Copyright 2017 Telerik AD. All rights reserved.                                                                                                                                                      
+ * Copyright 2017 Telerik AD                                                                                                                                                                            
  *                                                                                                                                                                                                      
- * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
- * http://www.telerik.com/purchase/license-agreement/kendo-ui-complete                                                                                                                                  
- * If you do not own a commercial license, this file shall be governed by the trial license terms.                                                                                                      
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
                                                                                                                                                                                                        
                                                                                                                                                                                                        
                                                                                                                                                                                                        
@@ -25,7 +25,8 @@
 (function (f, define) {
     define('kendo.autocomplete', [
         'kendo.list',
-        'kendo.mobile.scroller'
+        'kendo.mobile.scroller',
+        'kendo.virtuallist'
     ], f);
 }(function () {
     var __meta__ = {
@@ -93,6 +94,7 @@
                 }).on('focusout' + ns, function () {
                     that._change();
                     that._placeholder();
+                    that.close();
                     wrapper.removeClass(FOCUSED);
                 }).attr({
                     autocomplete: 'off',
@@ -171,6 +173,7 @@
                 this.listView.setOptions(listOptions);
                 this._accessors();
                 this._aria();
+                this._clearButton();
             },
             _listOptions: function (options) {
                 var listOptions = List.fn._listOptions.call(this, $.extend(options, { skipUpdateOnBind: true }));
@@ -380,6 +383,13 @@
                 this._accessor(this.value().split(this._separator()).join(this._defaultSeparator()));
                 return this;
             },
+            _preselect: function (value, text) {
+                this._inputValue(text);
+                this._accessor(value);
+                this._old = this.oldText = this._accessor();
+                this.listView.setValue(value);
+                this._placeholder();
+            },
             _change: function () {
                 var that = this;
                 var value = that._unifySeparators().value();
@@ -424,6 +434,8 @@
                 if (key === keys.DOWN) {
                     if (visible) {
                         this._move(current ? 'focusNext' : 'focusFirst');
+                    } else if (that.value()) {
+                        that.popup.open();
                     }
                     e.preventDefault();
                 } else if (key === keys.UP) {
@@ -431,6 +443,10 @@
                         this._move(current ? 'focusPrev' : 'focusLast');
                     }
                     e.preventDefault();
+                } else if (key === keys.HOME) {
+                    this._move('focusFirst');
+                } else if (key === keys.END) {
+                    this._move('focusLast');
                 } else if (key === keys.ENTER || key === keys.TAB) {
                     if (key === keys.ENTER && visible) {
                         e.preventDefault();
@@ -449,6 +465,8 @@
                 } else if (key === keys.ESC) {
                     if (visible) {
                         e.preventDefault();
+                    } else {
+                        that._clearValue();
                     }
                     that.close();
                 } else if (that.popup.visible() && (key === keys.PAGEDOWN || key === keys.PAGEUP)) {
@@ -456,6 +474,7 @@
                     var direction = key === keys.PAGEDOWN ? 1 : -1;
                     listView.scrollWith(direction * listView.screenHeight());
                 } else {
+                    that.popup._hovered = true;
                     that._search();
                 }
             },
@@ -552,12 +571,10 @@
                 this._loading = $('<span class="k-icon k-i-loading" style="display:none"></span>').insertAfter(this.element);
             },
             _clearButton: function () {
-                this._clear = $('<span unselectable="on" class="k-icon k-clear-value k-i-close" title="clear"></span>').attr({
-                    'role': 'button',
-                    'tabIndex': -1
-                });
+                List.fn._clearButton.call(this);
                 if (this.options.clearButton) {
                     this._clear.insertAfter(this.element);
+                    this.wrapper.addClass('k-autocomplete-clearable');
                 }
             },
             _toggleHover: function (e) {

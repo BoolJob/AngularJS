@@ -1,17 +1,17 @@
 /** 
- * Kendo UI v2017.2.504 (http://www.telerik.com/kendo-ui)                                                                                                                                               
- * Copyright 2017 Telerik AD. All rights reserved.                                                                                                                                                      
+ * Copyright 2017 Telerik AD                                                                                                                                                                            
  *                                                                                                                                                                                                      
- * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
- * http://www.telerik.com/purchase/license-agreement/kendo-ui-complete                                                                                                                                  
- * If you do not own a commercial license, this file shall be governed by the trial license terms.                                                                                                      
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
-                                                                                                                                                                                                       
+ * Licensed under the Apache License, Version 2.0 (the "License");                                                                                                                                      
+ * you may not use this file except in compliance with the License.                                                                                                                                     
+ * You may obtain a copy of the License at                                                                                                                                                              
+ *                                                                                                                                                                                                      
+ *     http://www.apache.org/licenses/LICENSE-2.0                                                                                                                                                       
+ *                                                                                                                                                                                                      
+ * Unless required by applicable law or agreed to in writing, software                                                                                                                                  
+ * distributed under the License is distributed on an "AS IS" BASIS,                                                                                                                                    
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                                                                                                             
+ * See the License for the specific language governing permissions and                                                                                                                                  
+ * limitations under the License.                                                                                                                                                                       
                                                                                                                                                                                                        
                                                                                                                                                                                                        
                                                                                                                                                                                                        
@@ -33,7 +33,7 @@
         depends: ['data']
     };
     (function ($, undefined) {
-        var kendo = window.kendo, ui = kendo.ui, keys = kendo.keys, map = $.map, each = $.each, trim = $.trim, extend = $.extend, isFunction = kendo.isFunction, template = kendo.template, outerWidth = kendo._outerWidth, outerHeight = kendo._outerHeight, Widget = ui.Widget, excludedNodesRegExp = /^(a|div)$/i, NS = '.kendoTabStrip', IMG = 'img', HREF = 'href', PREV = 'prev', SHOW = 'show', LINK = 'k-link', LAST = 'k-last', CLICK = 'click', ERROR = 'error', EMPTY = ':empty', IMAGE = 'k-image', FIRST = 'k-first', SELECT = 'select', ACTIVATE = 'activate', CONTENT = 'k-content', CONTENTURL = 'contentUrl', MOUSEENTER = 'mouseenter', MOUSELEAVE = 'mouseleave', CONTENTLOAD = 'contentLoad', DISABLEDSTATE = 'k-state-disabled', DEFAULTSTATE = 'k-state-default', ACTIVESTATE = 'k-state-active', FOCUSEDSTATE = 'k-state-focused', HOVERSTATE = 'k-state-hover', TABONTOP = 'k-tab-on-top', NAVIGATABLEITEMS = '.k-item:not(.' + DISABLEDSTATE + ')', HOVERABLEITEMS = '.k-tabstrip-items > ' + NAVIGATABLEITEMS + ':not(.' + ACTIVESTATE + ')', templates = {
+        var kendo = window.kendo, ui = kendo.ui, keys = kendo.keys, map = $.map, each = $.each, trim = $.trim, extend = $.extend, isFunction = kendo.isFunction, template = kendo.template, outerWidth = kendo._outerWidth, outerHeight = kendo._outerHeight, Widget = ui.Widget, excludedNodesRegExp = /^(a|div)$/i, NS = '.kendoTabStrip', IMG = 'img', HREF = 'href', PREV = 'prev', NEXT = 'next', SHOW = 'show', LINK = 'k-link', LAST = 'k-last', CLICK = 'click', ERROR = 'error', EMPTY = ':empty', IMAGE = 'k-image', FIRST = 'k-first', SELECT = 'select', ACTIVATE = 'activate', CONTENT = 'k-content', CONTENTURL = 'contentUrl', MOUSEENTER = 'mouseenter', MOUSELEAVE = 'mouseleave', CONTENTLOAD = 'contentLoad', DISABLEDSTATE = 'k-state-disabled', DEFAULTSTATE = 'k-state-default', ACTIVESTATE = 'k-state-active', FOCUSEDSTATE = 'k-state-focused', HOVERSTATE = 'k-state-hover', TABONTOP = 'k-tab-on-top', NAVIGATABLEITEMS = '.k-item:not(.' + DISABLEDSTATE + ')', KEYBOARDNAVIGATABLEITEMS = '.k-item', HOVERABLEITEMS = '.k-tabstrip-items > ' + NAVIGATABLEITEMS + ':not(.' + ACTIVESTATE + ')', DEFAULTDISTANCE = 200, templates = {
                 content: template('<div class=\'k-content\'#= contentAttributes(data) # role=\'tabpanel\'>#= content(item) #</div>'),
                 itemWrapper: template('<#= tag(item) # class=\'k-link\'#= contentUrl(item) ##= textAttributes(item) #>' + '#= image(item) ##= sprite(item) ##= text(item) #' + '</#= tag(item) #>'),
                 item: template('<li class=\'#= wrapperCssClass(group, item) #\' role=\'tab\' #=item.active ? "aria-selected=\'true\'" : \'\'#>' + '#= itemWrapper(data) #' + '</li>'),
@@ -79,7 +79,7 @@
             tabs.children(IMG).addClass(IMAGE);
             tabs.children('a').addClass(LINK).children(IMG).addClass(IMAGE);
             tabs.filter(':not([disabled]):not([class*=k-state-disabled])').addClass(DEFAULTSTATE);
-            tabs.filter('li[disabled]').addClass(DISABLEDSTATE).removeAttr('disabled');
+            tabs.filter('li[disabled]').addClass(DISABLEDSTATE).attr('aria-disabled', 'true').removeAttr('disabled');
             tabs.filter(':not([class*=k-state])').children('a').filter(':focus').parent().addClass(ACTIVESTATE + ' ' + TABONTOP);
             tabs.attr('role', 'tab');
             tabs.filter('.' + ACTIVESTATE).attr('aria-selected', true);
@@ -178,6 +178,9 @@
             _endItem: function (action) {
                 return this.tabGroup.children(NAVIGATABLEITEMS)[action]();
             },
+            _getItem: function (action) {
+                return this.tabGroup.children(KEYBOARDNAVIGATABLEITEMS)[action]();
+            },
             _item: function (item, action) {
                 var endItem;
                 if (action === PREV) {
@@ -190,10 +193,13 @@
                 }
                 item = item[action]();
                 if (!item[0]) {
-                    item = this._endItem(endItem);
+                    item = this.tabGroup.children(KEYBOARDNAVIGATABLEITEMS)[endItem]();
                 }
                 if (item.hasClass(DISABLEDSTATE)) {
-                    item = this._item(item, action);
+                    item.addClass(FOCUSEDSTATE);
+                }
+                if (item.hasClass(DISABLEDSTATE) || item.hasClass(ACTIVESTATE)) {
+                    this._focused = item;
                 }
                 return item;
             },
@@ -203,9 +209,7 @@
                     return focused;
                 }
                 if (focused) {
-                    if (focused[0].id === id) {
-                        focused.removeAttr('id');
-                    }
+                    that.tabGroup.children('#' + id).removeAttr('id');
                     focused.removeClass(FOCUSEDSTATE);
                 }
                 if (candidate) {
@@ -222,23 +226,27 @@
                 that._focused = candidate;
             },
             _keydown: function (e) {
-                var that = this, key = e.keyCode, current = that._current(), rtl = that._isRtl, action;
+                var that = this, key = e.keyCode, current = that._current(), rtl = that._isRtl, isHorizontal = /top|bottom/.test(that.options.tabPosition), action;
                 if (e.target != e.currentTarget) {
                     return;
                 }
-                if (key == keys.DOWN || key == keys.RIGHT) {
-                    action = rtl ? PREV : 'next';
-                } else if (key == keys.UP || key == keys.LEFT) {
-                    action = rtl ? 'next' : PREV;
+                if (key === keys.DOWN && !isHorizontal) {
+                    action = NEXT;
+                } else if (key === keys.UP && !isHorizontal) {
+                    action = PREV;
+                } else if (key === keys.RIGHT && isHorizontal) {
+                    action = rtl ? PREV : NEXT;
+                } else if (key === keys.LEFT && isHorizontal) {
+                    action = rtl ? NEXT : PREV;
                 } else if (key == keys.ENTER || key == keys.SPACEBAR) {
                     that._click(current);
                     e.preventDefault();
                 } else if (key == keys.HOME) {
-                    that._click(that._endItem('first'));
+                    that._click(that._getItem('first'));
                     e.preventDefault();
                     return;
                 } else if (key == keys.END) {
-                    that._click(that._endItem('last'));
+                    that._click(that._getItem('last'));
                     e.preventDefault();
                     return;
                 }
@@ -382,7 +390,7 @@
                 collapsible: false,
                 navigatable: true,
                 contentUrls: false,
-                scrollable: { distance: 200 }
+                scrollable: { distance: DEFAULTDISTANCE }
             },
             destroy: function () {
                 var that = this, scrollWrap = that.scrollWrap;
@@ -475,7 +483,7 @@
                 } else {
                     referenceTab = this.tabGroup.find(referenceTab);
                 }
-                var that = this, inserted = that._create(tab), referenceContent = that.element.find('#' + referenceTab.attr('aria-controls'));
+                var that = this, inserted = that._create(tab), referenceContent = that.element.find('[id=\'' + referenceTab.attr('aria-controls') + '\']');
                 each(inserted.tabs, function (idx) {
                     var contents = inserted.contents[idx];
                     var fromIndex = inserted.newTabsCreated ? that._contentUrls.length - (inserted.tabs.length - idx) : $(contents).index() - 1;
@@ -497,7 +505,7 @@
                 } else {
                     referenceTab = this.tabGroup.find(referenceTab);
                 }
-                var that = this, inserted = that._create(tab), referenceContent = that.element.find('#' + referenceTab.attr('aria-controls'));
+                var that = this, inserted = that._create(tab), referenceContent = that.element.find('[id=\'' + referenceTab.attr('aria-controls') + '\']');
                 each(inserted.tabs, function (idx) {
                     var contents = inserted.contents[idx];
                     var fromIndex = inserted.newTabsCreated ? that._contentUrls.length - (inserted.tabs.length - idx) : $(contents).index() - 1;
@@ -563,7 +571,7 @@
                     contents = $();
                     tabs.each(function () {
                         if (/k-tabstrip-items/.test(this.parentNode.className)) {
-                            var element = that.element.find('#' + this.getAttribute('aria-controls'));
+                            var element = that.element.find('[id=\'' + this.getAttribute('aria-controls') + '\']');
                             content = element;
                         } else {
                             content = $('<div class=\'' + CONTENT + '\'/>');
@@ -581,7 +589,7 @@
             _toggleDisabled: function (element, enable) {
                 element = this.tabGroup.find(element);
                 element.each(function () {
-                    $(this).toggleClass(DEFAULTSTATE, enable).toggleClass(DISABLEDSTATE, !enable);
+                    $(this).toggleClass(DEFAULTSTATE, enable).toggleClass(DISABLEDSTATE, !enable).attr('aria-disabled', !enable);
                 });
             },
             _updateClasses: function () {
@@ -703,11 +711,18 @@
                 $(e.currentTarget).toggleClass(HOVERSTATE, e.type == MOUSEENTER);
             },
             _click: function (item) {
-                var that = this, link = item.find('.' + LINK), href = link.attr(HREF), collapse = that.options.collapsible, index = item.index(), contentHolder = that.contentHolder(index), prevent, isAnchor;
+                var that = this, link = item.find('.' + LINK), href = link.attr(HREF), collapse = that.options.collapsible, index = item.index(), contentHolder = that.contentHolder(index), prevent, isAnchor, neighbours = item.parent().children(), oldFocusedTab = neighbours.filter('.' + FOCUSEDSTATE);
                 if (item.closest('.k-widget')[0] != that.wrapper[0]) {
                     return;
                 }
                 if (item.is('.' + DISABLEDSTATE + (!collapse ? ',.' + ACTIVESTATE : ''))) {
+                    oldFocusedTab.removeClass(FOCUSEDSTATE);
+                    that._focused = item;
+                    item.addClass(FOCUSEDSTATE);
+                    that._current(item);
+                    if (that._scrollableModeActive) {
+                        that._scrollTabsToItem(item);
+                    }
                     return true;
                 }
                 isAnchor = link.data(CONTENTURL) || that._contentUrls[index] || href && (href.charAt(href.length - 1) == '#' || href.indexOf('#' + that.element[0].id + '-') != -1);
@@ -782,6 +797,9 @@
             },
             _scrollableAllowed: function () {
                 var options = this.options;
+                if (options.scrollable && !options.scrollable.distance) {
+                    options.scrollable = { distance: DEFAULTDISTANCE };
+                }
                 return options.scrollable && !isNaN(options.scrollable.distance) && (options.tabPosition == 'top' || options.tabPosition == 'bottom');
             },
             _scrollTabsToItem: function (item) {
@@ -808,7 +826,7 @@
                 var tabGroup = that.tabGroup;
                 var scrLeft = tabGroup.scrollLeft();
                 tabGroup.finish().animate({ 'scrollLeft': scrLeft + delta }, 'fast', 'linear', function () {
-                    if (that._nowScrollingTabs) {
+                    if (that._nowScrollingTabs && !jQuery.fx.off) {
                         that._scrollTabsByDelta(delta);
                     } else {
                         that._toggleScrollButtons();
@@ -873,15 +891,6 @@
                 }
                 item.attr('data-animating', true);
                 var isAjaxContent = (item.children('.' + LINK).data(CONTENTURL) || that._contentUrls[itemIndex] || false) && contentHolder.is(EMPTY), showContentElement = function () {
-                        that.tabGroup.find('.' + TABONTOP).removeClass(TABONTOP);
-                        item.addClass(TABONTOP).css('z-index');
-                        if (kendo.size(animation.effects)) {
-                            oldTab.kendoAddClass(DEFAULTSTATE, { duration: animation.duration });
-                            item.kendoAddClass(ACTIVESTATE, { duration: animation.duration });
-                        } else {
-                            oldTab.addClass(DEFAULTSTATE);
-                            item.addClass(ACTIVESTATE);
-                        }
                         oldTab.removeAttr('aria-selected');
                         item.attr('aria-selected', true);
                         that._current(item);
@@ -903,6 +912,11 @@
                                 });
                                 kendo.resize(contentHolder);
                                 that.scrollWrap.css('height', '').css('height');
+                                if (kendo.support.browser.msie || kendo.support.browser.edge) {
+                                    contentHolder.finish().animate({ opacity: 0.9 }, 'fast', 'linear', function () {
+                                        contentHolder.finish().animate({ opacity: 1 }, 'fast', 'linear');
+                                    });
+                                }
                             }
                         }));
                     }, showContent = function () {
@@ -922,6 +936,15 @@
                         }
                     };
                 visibleContents.removeClass(ACTIVESTATE);
+                that.tabGroup.find('.' + TABONTOP).removeClass(TABONTOP);
+                item.addClass(TABONTOP).css('z-index');
+                if (kendo.size(animation.effects)) {
+                    oldTab.kendoAddClass(DEFAULTSTATE, { duration: animation.duration });
+                    item.kendoAddClass(ACTIVESTATE, { duration: animation.duration });
+                } else {
+                    oldTab.addClass(DEFAULTSTATE);
+                    item.addClass(ACTIVESTATE);
+                }
                 visibleContents.attr('aria-hidden', true);
                 visibleContents.attr('aria-expanded', false);
                 if (visibleContents.length) {
