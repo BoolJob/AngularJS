@@ -131,6 +131,140 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
 /**
  * @ngdoc object
+ * @name lbServices.GetPaisService
+ * @header lbServices.GetPaisService
+ * @object
+ *
+ * @description
+ *
+ * A $resource object for interacting with the `GetPaisService` model.
+ *
+ * ## Example
+ *
+ * See
+ * {@link http://docs.angularjs.org/api/ngResource.$resource#example $resource}
+ * for an example of using this object.
+ *
+ */
+  module.factory(
+    "GetPaisService",
+    [
+      'LoopBackResource', 'LoopBackAuth', '$injector', '$q',
+      function(LoopBackResource, LoopBackAuth, $injector, $q) {
+        var R = LoopBackResource(
+        urlBase + "/GetPaisService/:id",
+          { 'id': '@id' },
+          {
+          }
+        );
+
+
+
+
+        /**
+        * @ngdoc property
+        * @name lbServices.GetPaisService#modelName
+        * @propertyOf lbServices.GetPaisService
+        * @description
+        * The name of the model represented by this $resource,
+        * i.e. `GetPaisService`.
+        */
+        R.modelName = "GetPaisService";
+
+
+
+        return R;
+      }]);
+
+/**
+ * @ngdoc object
+ * @name lbServices.Localizacion
+ * @header lbServices.Localizacion
+ * @object
+ *
+ * @description
+ *
+ * A $resource object for interacting with the `Localizacion` model.
+ *
+ * ## Example
+ *
+ * See
+ * {@link http://docs.angularjs.org/api/ngResource.$resource#example $resource}
+ * for an example of using this object.
+ *
+ */
+  module.factory(
+    "Localizacion",
+    [
+      'LoopBackResource', 'LoopBackAuth', '$injector', '$q',
+      function(LoopBackResource, LoopBackAuth, $injector, $q) {
+        var R = LoopBackResource(
+        urlBase + "/Localizacion/:id",
+          { 'id': '@id' },
+          {
+
+            /**
+             * @ngdoc method
+             * @name lbServices.Localizacion#getPais
+             * @methodOf lbServices.Localizacion
+             *
+             * @description
+             *
+             * <em>
+             * (The remote method definition does not provide any description.)
+             * </em>
+             *
+             * @param {Object=} parameters Request parameters.
+             *
+             *   This method does not accept any parameters.
+             *   Supply an empty object or omit this argument altogether.
+             *
+             * @param {Object} postData Request data.
+             *
+             * This method expects a subset of model properties as request parameters.
+             *
+             * @param {function(Object,Object)=} successCb
+             *   Success callback with two arguments: `value`, `responseHeaders`.
+             *
+             * @param {function(Object)=} errorCb Error callback with one argument:
+             *   `httpResponse`.
+             *
+             * @returns {Object} An empty reference that will be
+             *   populated with the actual data once the response is returned
+             *   from the server.
+             *
+             * <em>
+             * (The remote method definition does not provide any description.
+             * This usually means the response is a `Localizacion` object.)
+             * </em>
+             */
+            "getPais": {
+              url: urlBase + "/Localizacion/getPais",
+              method: "POST",
+            },
+          }
+        );
+
+
+
+
+        /**
+        * @ngdoc property
+        * @name lbServices.Localizacion#modelName
+        * @propertyOf lbServices.Localizacion
+        * @description
+        * The name of the model represented by this $resource,
+        * i.e. `Localizacion`.
+        */
+        R.modelName = "Localizacion";
+
+
+
+        return R;
+      }]);
+
+/**
+ * @ngdoc object
  * @name lbServices.Usuario
  * @header lbServices.Usuario
  * @object
