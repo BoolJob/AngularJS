@@ -131,6 +131,53 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
 /**
  * @ngdoc object
+ * @name lbServices.GetCiudadService
+ * @header lbServices.GetCiudadService
+ * @object
+ *
+ * @description
+ *
+ * A $resource object for interacting with the `GetCiudadService` model.
+ *
+ * ## Example
+ *
+ * See
+ * {@link http://docs.angularjs.org/api/ngResource.$resource#example $resource}
+ * for an example of using this object.
+ *
+ */
+  module.factory(
+    "GetCiudadService",
+    [
+      'LoopBackResource', 'LoopBackAuth', '$injector', '$q',
+      function(LoopBackResource, LoopBackAuth, $injector, $q) {
+        var R = LoopBackResource(
+        urlBase + "/GetCiudadService/:id",
+          { 'id': '@id' },
+          {
+          }
+        );
+
+
+
+
+        /**
+        * @ngdoc property
+        * @name lbServices.GetCiudadService#modelName
+        * @propertyOf lbServices.GetCiudadService
+        * @description
+        * The name of the model represented by this $resource,
+        * i.e. `GetCiudadService`.
+        */
+        R.modelName = "GetCiudadService";
+
+
+
+        return R;
+      }]);
+
+/**
+ * @ngdoc object
  * @name lbServices.GetPaisService
  * @header lbServices.GetPaisService
  * @object
@@ -240,6 +287,46 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              */
             "getPais": {
               url: urlBase + "/Localizacion/getPais",
+              method: "POST",
+            },
+
+            /**
+             * @ngdoc method
+             * @name lbServices.Localizacion#getCiudad
+             * @methodOf lbServices.Localizacion
+             *
+             * @description
+             *
+             * <em>
+             * (The remote method definition does not provide any description.)
+             * </em>
+             *
+             * @param {Object=} parameters Request parameters.
+             *
+             *   This method does not accept any parameters.
+             *   Supply an empty object or omit this argument altogether.
+             *
+             * @param {Object} postData Request data.
+             *
+             * This method expects a subset of model properties as request parameters.
+             *
+             * @param {function(Object,Object)=} successCb
+             *   Success callback with two arguments: `value`, `responseHeaders`.
+             *
+             * @param {function(Object)=} errorCb Error callback with one argument:
+             *   `httpResponse`.
+             *
+             * @returns {Object} An empty reference that will be
+             *   populated with the actual data once the response is returned
+             *   from the server.
+             *
+             * <em>
+             * (The remote method definition does not provide any description.
+             * This usually means the response is a `Localizacion` object.)
+             * </em>
+             */
+            "getCiudad": {
+              url: urlBase + "/Localizacion/getCiudad",
               method: "POST",
             },
           }
