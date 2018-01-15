@@ -18,7 +18,7 @@ app.service('ButtonConfigLoader', function($http) {
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: 'app/registro/registro.html',
+            templateUrl: '/registro.html',
             controller: 'registroController'
         })
         .when('/registro', {
@@ -31,10 +31,10 @@ app.config(function ($routeProvider, $locationProvider) {
 
 	//$locationProvider.hashPrefix('!');
 	// use the HTML5 History API
-	$locationProvider.html5Mode({
+	/*$locationProvider.html5Mode({
 		enabled: true,
 		requireBase: false
-	});
+	});*/
     $locationProvider.hashPrefix('!');
 });
 
