@@ -1,4 +1,5 @@
-var app = angular.module('app', [
+// Creación del módulo
+var angularRoutingApp = angular.module('angularRoutingApp', [
 	'ngSanitize', 
 	'ngModal',
     'ngRoute',
@@ -7,41 +8,39 @@ var app = angular.module('app', [
 	'registroModule'
 ]);
 
-app.service('ButtonConfigLoader', function($http) {
-	this.loadConfig = function(route) {
-		console.log('route= ', route);
-		// TODO complete me!
-        
-	}
-});
+// Configuración de las rutas
+angularRoutingApp.config(function($routeProvider) {
 
-app.config(function ($routeProvider, $locationProvider) {
-    $routeProvider
-        .when('/', {
-            templateUrl: '/registro.html',
-            controller: 'registroController'
-        })
-        .when('/registro', {
-            templateUrl: 'app/registro/registro.html',
-            controller: 'registroController'
-        })
+	$routeProvider
+		.when('/', {
+			templateUrl	: 'pages/home.html',
+			controller 	: 'mainController'
+		})
+		.when('/acerca', {
+			templateUrl : 'pages/acerca.html',
+			controller 	: 'aboutController'
+		})
+		.when('/contacto', {
+			templateUrl : 'pages/contacto.html',
+			controller 	: 'contactController'
+		})
+		.when('/registro', {
+			templateUrl : 'app/registro/registro.html',
+			controller 	: 'registroController'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});
-
-	//$locationProvider.hashPrefix('!');
-	// use the HTML5 History API
-	/*$locationProvider.html5Mode({
-		enabled: true,
-		requireBase: false
-	});*/
-    $locationProvider.hashPrefix('!');
 });
 
-app.run(function($rootScope, ButtonConfigLoader) {
+angularRoutingApp.controller('mainController', function($scope) {
+	$scope.message = 'Hola, Mundo!';
+});
 
-	$rootScope.$on("$routeChangeSuccess", function(evt, next, current) {
-		ButtonConfigLoader.loadConfig(next.originalPath);
-        
-	});
+angularRoutingApp.controller('aboutController', function($scope) {
+	$scope.message = 'Esta es la página "Acerca de"';
+});
+
+angularRoutingApp.controller('contactController', function($scope) {
+	$scope.message = 'Esta es la página de "Contacto", aquí podemos poner un formulario';
 });
