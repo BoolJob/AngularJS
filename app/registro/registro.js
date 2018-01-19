@@ -14,9 +14,7 @@ app.controller('registroController', function($scope,Usuario) {
         Email: "",
         Telefono: "",
         Pais: 1,
-        Region: 1,
         Ciudad: 1,
-        Comuna: 1,
         Password: ""
 	}
 	
@@ -28,9 +26,7 @@ app.controller('registroController', function($scope,Usuario) {
             Email: $scope.usuario.Email,
             Telefono: $scope.usuario.Telefono,
             Pais: $scope.usuario.Pais,
-            Region: $scope.usuario.Region,
             Ciudad: $scope.usuario.Ciudad,
-            Comuna: $scope.usuario.Comuna,
             Password: $scope.usuario.Password
 		},
 		function(value, res) {
